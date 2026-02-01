@@ -1,0 +1,618 @@
+/*
+  Legacy products HTML styles
+  These styles target the HTML returned by the legacy parking products endpoint.
+  Kept in a dedicated file to ensure it is always bundled in production.
+  Using !important where needed to override inline styles from the API.
+*/
+
+.parking-products-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .parking-products-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .parking-products-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Reset all inline styles from API HTML */
+.parking-products-grid * {
+  box-sizing: border-box;
+}
+
+/* Product cards - override any inline border/background */
+.parking-products-grid .product-card,
+.parking-products-grid .parking-card,
+.parking-products-grid .card,
+.parking-products-grid > div {
+  background: hsl(var(--card)) !important;
+  color: hsl(var(--card-foreground)) !important;
+  border: 1px solid hsl(var(--border)) !important;
+  border-radius: var(--radius) !important;
+  overflow: hidden !important;
+  box-shadow:
+    0 4px 6px -1px rgb(0 0 0 / 0.1),
+    0 2px 4px -2px rgb(0 0 0 / 0.1) !important;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease !important;
+}
+
+.parking-products-grid .product-card:hover,
+.parking-products-grid .parking-card:hover,
+.parking-products-grid .card:hover,
+.parking-products-grid > div:hover {
+  box-shadow:
+    0 10px 15px -3px rgb(0 0 0 / 0.1),
+    0 4px 6px -4px rgb(0 0 0 / 0.1) !important;
+  transform: translateY(-4px) !important;
+}
+
+/* Header blocks - override yellow/orange backgrounds */
+.parking-products-grid .product-header,
+.parking-products-grid .card-header,
+.parking-products-grid .header,
+.parking-products-grid > div > div:first-child {
+  padding: 1rem !important;
+  text-align: center !important;
+  background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(237 35% 30%) 100%) !important;
+  color: hsl(var(--primary-foreground)) !important;
+  border: none !important;
+}
+
+/* Body */
+.parking-products-grid .product-body,
+.parking-products-grid .card-body,
+.parking-products-grid .body,
+.parking-products-grid > div > div:nth-child(2) {
+  padding: 1rem 1.25rem !important;
+  background: hsl(var(--card)) !important;
+}
+
+/* Titles */
+.parking-products-grid h3,
+.parking-products-grid h4,
+.parking-products-grid .product-title {
+  margin: 0 0 0.5rem 0 !important;
+  font-weight: 800 !important;
+  line-height: 1.25 !important;
+  color: hsl(var(--foreground)) !important;
+}
+
+/* Prices */
+.parking-products-grid .price,
+.parking-products-grid .product-price,
+.parking-products-grid [class*="price"] {
+  font-weight: 800 !important;
+  color: hsl(var(--primary)) !important;
+}
+
+/* Strikethrough old prices */
+.parking-products-grid del,
+.parking-products-grid s,
+.parking-products-grid .old-price,
+.parking-products-grid .line-through,
+.parking-products-grid .text-red-600 {
+  color: #dc2626 !important;
+  text-decoration: line-through !important;
+  font-weight: 700 !important;
+}
+
+/* Savings text - green color for "You Save" */
+.parking-products-grid .savings,
+.parking-products-grid [class*="save"],
+.parking-products-grid .text-green-600 {
+  color: #16a34a !important;
+  font-weight: 700 !important;
+  text-decoration: none !important;
+}
+
+/* Gray text utilities from API */
+.parking-products-grid .text-gray-500,
+.parking-products-grid .text-gray-700 {
+  color: #6b7280 !important;
+}
+
+/* Gray backgrounds from API */
+.parking-products-grid .bg-gray-100 {
+  background-color: #f3f4f6 !important;
+}
+
+/* Font utilities from API */
+.parking-products-grid .font-bold {
+  font-weight: 700 !important;
+}
+
+.parking-products-grid .font-semibold {
+  font-weight: 600 !important;
+}
+
+.parking-products-grid .font-medium {
+  font-weight: 500 !important;
+}
+
+/* Text sizes from API */
+.parking-products-grid .text-sm {
+  font-size: 0.875rem !important;
+}
+
+.parking-products-grid .text-base {
+  font-size: 1rem !important;
+}
+
+.parking-products-grid .text-lg {
+  font-size: 1.125rem !important;
+}
+
+.parking-products-grid .text-xl {
+  font-size: 1.25rem !important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Tailwind layout utilities used in legacy HTML (needed for production build) */
+/* -------------------------------------------------------------------------- */
+
+/* Display */
+.parking-products-grid .block {
+  display: block !important;
+}
+
+.parking-products-grid .inline-block {
+  display: inline-block !important;
+}
+
+.parking-products-grid .flex {
+  display: flex !important;
+}
+
+.parking-products-grid .inline-flex {
+  display: inline-flex !important;
+}
+
+/* Flex direction */
+.parking-products-grid .flex-col {
+  flex-direction: column !important;
+}
+
+/* Alignment */
+.parking-products-grid .items-center {
+  align-items: center !important;
+}
+
+.parking-products-grid .items-start {
+  align-items: flex-start !important;
+}
+
+.parking-products-grid .justify-between {
+  justify-content: space-between !important;
+  margin-right: 1rem;
+  margin-left: 1rem;
+}
+
+.parking-products-grid .justify-center {
+  justify-content: center !important;
+}
+
+/* Gaps (Tailwind gap-1/gap-2 appear in API HTML) */
+.parking-products-grid .gap-1 {
+  gap: 0.25rem !important;
+}
+
+.parking-products-grid .gap-2 {
+  gap: 0.5rem !important;
+}
+
+.parking-products-grid .gap-3 {
+  gap: 0.75rem !important;
+}
+
+.parking-products-grid .gap-4 {
+  gap: 1rem !important;
+}
+
+/* Common spacing utilities affecting alignment */
+.parking-products-grid .ml-2 {
+  margin-left: 0.5rem !important;
+}
+
+.parking-products-grid .mb-2 {
+  margin-bottom: 0.5rem !important;
+}
+
+.parking-products-grid .mb-4 {
+  margin-bottom: 1rem !important;
+}
+
+.parking-products-grid .py-1 {
+  padding-top: 0.25rem !important;
+  padding-bottom: 0.25rem !important;
+}
+
+.parking-products-grid .py-2 {
+  padding-top: 0.5rem !important;
+  padding-bottom: 0.5rem !important;
+}
+
+.parking-products-grid .px-2 {
+  padding-left: 0.5rem !important;
+  padding-right: 0.5rem !important;
+}
+
+/* Width helpers */
+.parking-products-grid .w-full {
+  width: 100% !important;
+}
+
+/* Text alignment */
+.parking-products-grid .text-center {
+  text-align: center !important;
+}
+
+.parking-products-grid .text-left {
+  text-align: left !important;
+}
+
+.parking-products-grid .text-right {
+  text-align: right !important;
+}
+
+/* Flex wrap */
+.parking-products-grid .flex-wrap {
+  flex-wrap: wrap !important;
+}
+
+.parking-products-grid .flex-nowrap {
+  flex-wrap: nowrap !important;
+}
+
+/* Flex grow/shrink */
+.parking-products-grid .flex-1 {
+  flex: 1 1 0% !important;
+}
+
+.parking-products-grid .flex-auto {
+  flex: 1 1 auto !important;
+}
+
+.parking-products-grid .flex-none {
+  flex: none !important;
+}
+
+/* Space between (horizontal) */
+.parking-products-grid .space-x-1 > * + * {
+  margin-left: 0.25rem !important;
+}
+
+.parking-products-grid .space-x-2 > * + * {
+  margin-left: 0.5rem !important;
+}
+
+.parking-products-grid .space-x-3 > * + * {
+  margin-left: 0.75rem !important;
+}
+
+.parking-products-grid .space-x-4 > * + * {
+  margin-left: 1rem !important;
+}
+
+/* Space between (vertical) */
+.parking-products-grid .space-y-1 > * + * {
+  margin-top: 0.25rem !important;
+}
+
+.parking-products-grid .space-y-2 > * + * {
+  margin-top: 0.5rem !important;
+}
+
+.parking-products-grid .space-y-3 > * + * {
+  margin-top: 0.75rem !important;
+}
+
+.parking-products-grid .space-y-4 > * + * {
+  margin-top: 1rem !important;
+}
+
+/* Additional margins */
+.parking-products-grid .mt-1 {
+  margin-top: 0.25rem !important;
+}
+
+.parking-products-grid .mt-2 {
+  margin-top: 0.5rem !important;
+}
+
+.parking-products-grid .mt-4 {
+  margin-top: 1rem !important;
+}
+
+.parking-products-grid .mr-1 {
+  margin-right: 0.25rem !important;
+}
+
+.parking-products-grid .mr-2 {
+  margin-right: 0.5rem !important;
+}
+
+.parking-products-grid .mb-1 {
+  margin-bottom: 0.25rem !important;
+}
+
+/* Additional padding */
+.parking-products-grid .p-2 {
+  padding: 0.5rem !important;
+}
+
+.parking-products-grid .p-3 {
+  padding: 0.75rem !important;
+}
+
+.parking-products-grid .p-4 {
+  padding: 1rem !important;
+}
+
+.parking-products-grid .px-3 {
+  padding-left: 0.75rem !important;
+  padding-right: 0.75rem !important;
+}
+
+.parking-products-grid .px-4 {
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
+}
+
+.parking-products-grid .py-3 {
+  padding-top: 0.75rem !important;
+  padding-bottom: 0.75rem !important;
+}
+
+.parking-products-grid .py-4 {
+  padding-top: 1rem !important;
+  padding-bottom: 1rem !important;
+}
+
+.parking-products-grid .pt-2 {
+  padding-top: 0.5rem !important;
+}
+
+.parking-products-grid .pt-3 {
+  padding-top: 0.75rem !important;
+}
+
+.parking-products-grid .pb-2 {
+  padding-bottom: 0.5rem !important;
+}
+
+.parking-products-grid .pb-3 {
+  padding-bottom: 0.75rem !important;
+}
+
+/* Rounded utilities (API uses rounded/rounded-lg/rounded-full) */
+.parking-products-grid .rounded {
+  border-radius: 0.25rem !important;
+}
+
+.parking-products-grid .rounded-lg {
+  border-radius: 0.5rem !important;
+}
+
+.parking-products-grid .rounded-full {
+  border-radius: 9999px !important;
+}
+
+.parking-products-grid .rounded-xl {
+  border-radius: 0.75rem !important;
+}
+
+/* Border utilities */
+.parking-products-grid .border {
+  border-width: 1px !important;
+}
+
+.parking-products-grid .border-t {
+  border-top-width: 1px !important;
+}
+
+.parking-products-grid .border-b {
+  border-bottom-width: 1px !important;
+}
+
+/* Leading (line-height) */
+.parking-products-grid .leading-tight {
+  line-height: 1.25 !important;
+}
+
+.parking-products-grid .leading-snug {
+  line-height: 1.375 !important;
+}
+
+.parking-products-grid .leading-normal {
+  line-height: 1.5 !important;
+}
+
+/* Whitespace */
+.parking-products-grid .whitespace-nowrap {
+  white-space: nowrap !important;
+}
+
+/* Truncate */
+.parking-products-grid .truncate {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+/* Overflow utilities (API uses overflow-hidden) */
+.parking-products-grid .overflow-hidden {
+  overflow: hidden !important;
+}
+
+/* Feature lists */
+.parking-products-grid ul {
+  margin: 0.75rem 0 !important;
+  padding: 0 0 0 1.25rem !important;
+  list-style: disc !important;
+  color: hsl(var(--muted-foreground)) !important;
+}
+
+.parking-products-grid ul li {
+  display: list-item !important;
+  margin: 0.35rem 0 !important;
+  color: hsl(var(--muted-foreground)) !important;
+}
+
+.parking-products-grid ul li::before {
+  content: none !important;
+}
+
+/* CTA buttons / links - override yellow/orange buttons */
+.parking-products-grid a[onclick],
+.parking-products-grid .btn,
+.parking-products-grid button,
+.parking-products-grid input[type="submit"],
+.parking-products-grid [class*="book"],
+.parking-products-grid [class*="Book"] {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0.6rem 1.25rem !important;
+  border-radius: calc(var(--radius) * 0.75) !important;
+  font-weight: 700 !important;
+  text-decoration: none !important;
+  cursor: pointer !important;
+  background: hsl(var(--accent)) !important;
+  color: hsl(var(--accent-foreground)) !important;
+  border: none !important;
+  transition:
+    transform 0.15s ease,
+    opacity 0.15s ease !important;
+}
+
+.parking-products-grid a[onclick]:hover,
+.parking-products-grid .btn:hover,
+.parking-products-grid button:hover,
+.parking-products-grid input[type="submit"]:hover {
+  opacity: 0.92 !important;
+  transform: scale(1.02) !important;
+}
+
+/* "More Info" style buttons - secondary style */
+.parking-products-grid .info-btn,
+.parking-products-grid [class*="info"],
+.parking-products-grid [class*="Info"] {
+  background: hsl(var(--secondary)) !important;
+  color: hsl(var(--secondary-foreground)) !important;
+  font-size: 0.75rem !important;
+  padding: 0.4rem 0.75rem !important;
+}
+
+/* Footer */
+.parking-products-grid .product-footer,
+.parking-products-grid .card-footer,
+.parking-products-grid .footer,
+.parking-products-grid > div > div:last-child {
+  padding: 1rem !important;
+  border-top: 1px solid hsl(var(--border)) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 0.75rem !important;
+  background: hsl(var(--card)) !important;
+}
+
+/* Images in cards */
+.parking-products-grid img {
+  max-width: 100% !important;
+  height: auto !important;
+  object-fit: contain !important;
+}
+
+/* Reset any inline yellow/gold borders */
+.parking-products-grid [style*="border"] {
+  border-color: hsl(var(--border)) !important;
+}
+
+/* Reset any inline yellow/orange backgrounds */
+.parking-products-grid [style*="background"] {
+  background: inherit !important;
+}
+
+/* ============================================================================ */
+/* Product Info Modal Carousel & Lightbox Styles                                */
+/* ============================================================================ */
+
+/* Carousel navigation buttons */
+.carousel-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 20;
+  transition: background 0.3s;
+}
+
+.carousel-nav:hover {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.carousel-nav.prev {
+  left: 10px;
+}
+
+.carousel-nav.next {
+  right: 10px;
+}
+
+/* Mobile carousel adjustments */
+@media (max-width: 768px) {
+  .carousel-nav {
+    width: 35px;
+    height: 35px;
+  }
+}
+
+/* Lightbox animation */
+.lightbox-enter {
+  animation: lightboxFadeIn 0.3s ease;
+}
+
+@keyframes lightboxFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Tab buttons container - hide scrollbar but keep functionality */
+.tab-buttons-container::-webkit-scrollbar {
+  display: none;
+}
+
+.tab-buttons-container {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Procedures tab heading styles */
+#procedures h3,
+.prose h3 {
+  color: hsl(var(--accent));
+}

@@ -1,0 +1,424 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Ensure legacy parking product card styles are included in the initial CSS bundle
+   so /select-parking doesn't flash unstyled in the published build. */
+@import "./styles/legacy-products.css";
+
+/* Dublin Airport Parking Design System
+   Professional, trustworthy parking booking platform
+   Color palette: Teal (trust) + Amber (action) + Cream (warmth)
+*/
+
+@layer base {
+  :root {
+    /* Core Background */
+    --background: 0 0% 100%;
+    --foreground: 237 40% 24%;
+
+    /* Cards & Surfaces */
+    --card: 0 0% 100%;
+    --card-foreground: 237 40% 24%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 237 40% 24%;
+
+    /* Primary: Deep Navy Blue #252654 */
+    --primary: 237 40% 24%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Secondary: Light Navy Tint */
+    --secondary: 237 30% 95%;
+    --secondary-foreground: 237 40% 24%;
+
+    /* Muted: Soft grays */
+    --muted: 237 15% 96%;
+    --muted-foreground: 237 16% 47%;
+
+    /* Accent: Golden Yellow #f8bf12 */
+    --accent: 44 94% 52%;
+    --accent-foreground: 237 40% 24%;
+
+    /* Destructive */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Borders & Inputs */
+    --border: 237 20% 90%;
+    --input: 237 20% 90%;
+    --ring: 237 40% 24%;
+
+    --radius: 0.75rem;
+
+    /* Custom: Hero gradient */
+    --hero-gradient: linear-gradient(135deg, hsl(237 40% 24%) 0%, hsl(237 35% 30%) 100%);
+    
+    /* Custom: Stats section */
+    --stats-bg: 237 40% 24%;
+    
+    /* Custom: Cream section backgrounds */
+    --cream: 45 50% 97%;
+    --cream-foreground: 237 40% 24%;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    --shadow-booking: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+
+  }
+
+  .dark {
+    --background: 237 40% 10%;
+    --foreground: 44 94% 85%;
+
+    --card: 237 40% 13%;
+    --card-foreground: 44 94% 85%;
+
+    --popover: 237 40% 13%;
+    --popover-foreground: 44 94% 85%;
+
+    --primary: 44 94% 52%;
+    --primary-foreground: 237 40% 24%;
+
+    --secondary: 237 30% 20%;
+    --secondary-foreground: 44 94% 80%;
+
+    --muted: 237 25% 20%;
+    --muted-foreground: 237 20% 65%;
+
+    --accent: 44 94% 52%;
+    --accent-foreground: 237 40% 24%;
+
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 237 25% 20%;
+    --input: 237 25% 20%;
+    --ring: 44 94% 52%;
+
+    --cream: 237 40% 13%;
+    --cream-foreground: 44 94% 85%;
+
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold tracking-tight text-foreground;
+  }
+
+  /* Layout containment to reduce forced reflows */
+  section {
+    contain: layout style;
+  }
+
+  /* Isolate header/footer layout */
+  header, footer {
+    contain: layout style;
+  }
+
+  /* Containment for Radix UI overlays - use layout only to not block visibility */
+  [data-radix-portal],
+  [role="dialog"],
+  [role="alertdialog"] {
+    contain: layout;
+  }
+
+  /* Select viewport only - don't apply to popper wrapper */
+  [data-radix-select-viewport] {
+    contain: layout style;
+  }
+
+  /* Calendar containment - layout only */
+  .rdp {
+    contain: layout;
+  }
+
+  /* Promote animated elements to compositor layer to avoid main-thread reflows */
+  .animate-fade-in,
+  .animate-fade-in-up,
+  .animate-slide-in-left,
+  .animate-slide-in-right,
+  .animate-scale-in {
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+  }
+
+  /* GPU acceleration for floating elements - use transform for compositor layer */
+  [data-radix-popper-content-wrapper] > * {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    will-change: transform;
+  }
+
+  /* Booking form containment to isolate reflows */
+  .booking-card {
+    contain: layout style;
+  }
+}
+
+@layer components {
+  /* Hero Section Styles */
+  .hero-gradient {
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(237 35% 30%) 100%);
+  }
+
+  .hero-overlay {
+    background: linear-gradient(
+      to right,
+      hsl(var(--primary) / 0.95) 0%,
+      hsl(var(--primary) / 0.7) 50%,
+      hsl(var(--primary) / 0.4) 100%
+    );
+  }
+
+  /* Booking Form Card */
+  .booking-card {
+    @apply bg-card rounded-2xl p-6 md:p-8;
+    box-shadow: var(--shadow-booking);
+  }
+
+  /* Stats Section */
+  .stats-gradient {
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(237 35% 30%) 100%);
+  }
+
+  /* Section backgrounds */
+  .section-cream {
+    @apply bg-cream;
+  }
+
+  /* Trust Badge */
+  .trust-badge {
+    @apply flex items-center gap-3 p-4 rounded-xl bg-card border border-border/50;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s ease;
+  }
+
+  .trust-badge:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+
+  /* Service Card */
+  .service-card {
+    @apply relative overflow-hidden rounded-2xl bg-card;
+    box-shadow: var(--shadow-lg);
+    transition: all 0.4s ease;
+  }
+
+  .service-card:hover {
+    box-shadow: var(--shadow-xl);
+    transform: translateY(-8px);
+  }
+
+  /* Testimonial Card */
+  .testimonial-card {
+    @apply bg-card rounded-2xl p-6 border border-border/50;
+    box-shadow: var(--shadow-md);
+  }
+
+  /* Partner Logo Marquee */
+  .marquee-track {
+    animation: marquee 30s linear infinite;
+  }
+
+  .marquee-track:hover {
+    animation-play-state: paused;
+  }
+
+  /* FAQ Accordion */
+  .faq-item {
+    @apply border-b border-border/50 last:border-0;
+  }
+
+  /* Newsletter Section */
+  .newsletter-gradient {
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(237 35% 30%) 100%);
+  }
+
+  /* Airport Card */
+  .airport-card {
+    @apply relative overflow-hidden rounded-xl cursor-pointer;
+    transition: all 0.3s ease;
+  }
+
+  .airport-card:hover {
+    transform: scale(1.03);
+  }
+
+  .airport-card::after {
+    content: '';
+    @apply absolute inset-0;
+    background: linear-gradient(to top, hsl(0 0% 0% / 0.7) 0%, transparent 60%);
+  }
+
+  /* Counter Animation */
+  .counter-value {
+    @apply text-5xl md:text-6xl font-bold;
+    background: linear-gradient(135deg, hsl(0 0% 100%) 0%, hsl(0 0% 100% / 0.8) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+@layer utilities {
+  /* Hover effects */
+  .hover-lift {
+    @apply transition-all duration-300 ease-out;
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  /* Link underline animation */
+  .link-underline {
+    @apply relative;
+  }
+
+  .link-underline::after {
+    content: '';
+    @apply absolute bottom-0 left-0 w-full h-0.5 bg-current scale-x-0 origin-right transition-transform duration-300;
+  }
+
+  .link-underline:hover::after {
+    @apply scale-x-100 origin-left;
+  }
+
+  /* Scroll reveal animations */
+  .reveal {
+    @apply opacity-0 translate-y-8;
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .reveal.visible {
+    @apply opacity-100 translate-y-0;
+  }
+
+  /* Gradient text */
+  .gradient-text {
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(237 35% 35%) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Pulse ring animation */
+  .pulse-ring {
+    @apply relative;
+  }
+
+  .pulse-ring::before {
+    content: '';
+    @apply absolute inset-0 rounded-full;
+    animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+}
+
+/* Keyframes */
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes pulse-ring {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes count-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Print styles - Only show printable booking content */
+@media print {
+  @page {
+    margin: 10mm;
+    size: A4;
+  }
+
+  /* Hide EVERYTHING by default */
+  body * {
+    visibility: hidden;
+  }
+
+  /* Only show the printable booking div and its children */
+  #printable-booking,
+  #printable-booking * {
+    visibility: visible;
+  }
+
+  /* Position printable content at top left */
+  #printable-booking {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    padding: 20px;
+    background: white !important;
+  }
+
+  /* Hide header, footer, nav, and print:hidden elements completely */
+  header,
+  footer,
+  nav,
+  .print\\:hidden {
+    display: none !important;
+  }
+
+  /* Ensure proper background */
+  body {
+    background: white !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Remove all margins/padding from containers */
+  section,
+  .container,
+  .bg-cream {
+    padding: 0 !important;
+    margin: 0 !important;
+    background: white !important;
+  }
+}
