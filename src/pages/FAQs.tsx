@@ -13,24 +13,44 @@ const FAQs = () => {
 
   const faqs = [
     {
+      question: `What types of parking services do you offer at ${airportName}?`,
+      answer: `We provide Meet & Greet and Park & Ride services, along with secure long stay car park ${airportName} options. You can choose the service that best suits your travel needs.`,
+    },
+    {
+      question: `Can I find cheap ${airportName} parking?`,
+      answer: `Yes! We offer competitive rates and special ${airportName} parking deals for both Meet & Greet and Park & Ride services. Booking in advance ensures the best prices.`,
+    },
+    {
       question: `How do I book parking at ${airportName}?`,
-      answer:
-        "Simply use our online booking form on this page. Select your entry and exit dates, choose your preferred parking option, and complete your reservation in just a few minutes.",
+      answer: `Booking is simple with our online platform. Select your dates, choose your preferred service, and confirm your booking. You'll receive instant confirmation for airport parking ${airportName}.`,
     },
     {
-      question: "What parking options are available?",
-      answer:
-        "We offer Meet & Greet service where you drop your car at the terminal, and Park & Ride where you park in our secure lot and take a free shuttle to the terminal.",
+      question: "Is my car safe while parked?",
+      answer: `Absolutely. All our long stay car park ${airportName} facilities are fully monitored, patrolled, and secured with CCTV to keep your vehicle safe while you travel.`,
     },
     {
-      question: "Is my car secure while parked?",
-      answer:
-        "Yes, all our car parks are fully secured with 24/7 CCTV monitoring, regular patrols, and secure fencing. Your vehicle is in safe hands with us.",
+      question: "Do you provide shuttle transfers to the terminal?",
+      answer: `Yes, for Park & Ride services we provide fast and reliable shuttle transfers to ${airportName} terminals. For Meet & Greet, our staff will meet you at the terminal and park your car for you.`,
     },
     {
-      question: "Can I modify or cancel my booking?",
-      answer:
-        "Yes, you can modify or cancel your booking Contact our 24x7 support team and they will assist you to cancel or modify your booking",
+      question: "Can you help with luggage?",
+      answer: "Yes! Our friendly staff assist with your luggage during Meet & Greet service or when dropping off your car for Park & Ride, ensuring a smooth start to your journey.",
+    },
+    {
+      question: "Do I need to book in advance?",
+      answer: `We highly recommend booking ahead to guarantee your parking space and secure the best rates for parking at ${airportName}. Advance booking also ensures a stress-free start to your travel.`,
+    },
+    {
+      question: "Where are your car parks located?",
+      answer: `Our secure ${airportName} parking locations are conveniently near the terminal, providing easy access and efficient transfers, so you can park quickly and start your journey with peace of mind.`,
+    },
+    {
+      question: "Can I cancel or modify my booking?",
+      answer: "Yes, you can modify or cancel your booking according to our terms. Check your booking confirmation or contact our 24/7 customer support team for assistance.",
+    },
+    {
+      question: "Do you offer services at other UK airports?",
+      answer: "Yes, we also provide trusted airport parking across the UK, including Heathrow, Gatwick, Manchester, and more, all with professional service and competitive pricing.",
     },
   ];
 
