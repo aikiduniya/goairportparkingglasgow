@@ -13,8 +13,9 @@ const FAQs = () => {
 
   const faqs = [
     {
-      question: `How do I book parking at ${airportName}?`,
-      answer: "",
+      question: `What types of parking services do you offer at ${airportName}?`,
+      answer:
+        "We provide Meet & Greet and Park & Ride services, along with secure long stay car park ${airportName} options. You can choose the service that best suits your travel needs.",
     },
     {
       question: "",
