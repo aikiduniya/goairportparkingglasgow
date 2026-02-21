@@ -13,45 +13,24 @@ const FAQs = () => {
 
   const faqs = [
     {
-      question: `What types of parking services do you offer at ${airportName}?`,
+      question: `How do I book parking at ${airportName}?`,
       answer:
-        "We provide Meet & Greet and Park & Ride services, along with secure long stay car park ${airportName} options. You can choose the service that best suits your travel needs.",
+        "Simply use our online booking form on this page. Select your entry and exit dates, choose your preferred parking option, and complete your reservation in just a few minutes.",
     },
     {
-      question: "",
-      answer: "",
+      question: "What parking options are available?",
+      answer:
+        "We offer Meet & Greet service where you drop your car at the terminal, and Park & Ride where you park in our secure lot and take a free shuttle to the terminal.",
     },
     {
-      question: "",
-      answer: "",
+      question: "Is my car secure while parked?",
+      answer:
+        "Yes, all our car parks are fully secured with 24/7 CCTV monitoring, regular patrols, and secure fencing. Your vehicle is in safe hands with us.",
     },
     {
-      question: "",
-      answer: "",
-    },
-    {
-      question: "",
-      answer: "",
-    },
-    {
-      question: "",
-      answer: "",
-    },
-    {
-      question: "",
-      answer: "",
-    },
-    {
-      question: "",
-      answer: "",
-    },
-    {
-      question: "",
-      answer: "",
-    },
-    {
-      question: "",
-      answer: "",
+      question: "Can I modify or cancel my booking?",
+      answer:
+        "Yes, you can modify or cancel your booking Contact our 24x7 support team and they will assist you to cancel or modify your booking",
     },
   ];
 
