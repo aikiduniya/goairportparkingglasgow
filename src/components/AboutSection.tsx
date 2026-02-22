@@ -98,17 +98,30 @@ const AboutSection = () => {
           </h3>
           <div className="space-y-4 text-muted-foreground leading-relaxed max-w-4xl mx-auto text-justify">
             <p>
-              For over a decade, {webName} has been a trusted name in airport parking services across the UK. Our
-              mission is simple: to make your journey smoother by offering a wide range of secure, reliable, and
-              affordable airport parking options. With our easy-to-use online booking platform and a network of
-              professional parking operators, we ensure outstanding value and peace of mind for every traveler.
+              For over a decade, {webName} has been has been a trusted provider of secure and affordable airport parking
+              in the UK. We specialise in delivering reliable airport parking Glasgow travellers can depend on, with
+              competitive pricing and professional service at major airports nationwide..
             </p>
             <p>
-              Discover our trusted airport parking solutions at the United Kingdom's busiest airports, including
-              Heathrow, Gatwick, Manchester, and more. We've built our reputation on providing safe, convenient, and
-              cost-effective parking, so you can travel with confidence knowing your car is in good hands. Whether you
-              need short stay, long stay, or meet-and-greet airport parking, {webName} is here to make your journey
-              stress-free.
+              Our mission is simple — to make your journey easier by offering a wide range of secure, convenient, and
+              cheap airport parking options, including Meet & Greet, Park & Ride, short stay, and long stay car park
+              Glasgow Airport services. Through our easy-to-use online booking system and partnerships with experienced
+              parking operators, we provide excellent value and complete peace of mind.
+            </p>
+            <p>
+              In addition to parking at Glasgow Airport, we offer trusted parking solutions at some of the United
+              Kingdom’s busiest airports, including Heathrow, Gatwick, Manchester, and more. Our reputation is built on
+              safe facilities, professional vehicle handling, and reliable transfers, ensuring your vehicle remains
+              secure while you travel.
+            </p>
+            <p>
+              Whether you are searching for cheap Glasgow Airport parking, flexible Glasgow Airport long stay options,
+              or convenient airport parking near Glasgow Airport, we are committed to delivering stress-free service
+              from booking to return.
+            </p>
+            <p>
+              Book with confidence and experience professional airport parking designed around security, affordability,
+              and convenience.
             </p>
           </div>
         </div>
