@@ -27,9 +27,9 @@ const WhyChooseUs = () => {
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Why Choose Us?</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Don't burden yourself with the stress and inconvenience of finding parking on the day, book in advance to
-            ensure you will never pay more than if you park without a reservation and have a peaceful start to your
-            travels.
+            Don’t stress about finding parking on the day — book in advance and enjoy a smooth, hassle-free start to
+            your journey. With Glasgow Airport Parking, you get guaranteed parking, professional service, and peace of
+            mind.
           </p>
         </div>
 
