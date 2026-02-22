@@ -88,7 +88,7 @@ const SelectParking = () => {
   const promoCode = searchParams.get("promoCode") || "";
   const traffic_source = searchParams.get("traffic_source") || "";
   
-  const [activeFilter, setActiveFilter] = useState<"all" | "meet-greet">("all");
+  const [activeFilter, setActiveFilter] = useState<"all" | "meet-greet" | "park-ride">("all");
   const [sortBy, setSortBy] = useState<"low-to-high" | "high-to-low">("low-to-high");
   const [rawProductsHtml, setRawProductsHtml] = useState<string>("");
   const [loading, setLoading] = useState(true);
@@ -104,6 +104,8 @@ const SelectParking = () => {
     let filtered = products;
     if (activeFilter === "meet-greet") {
       filtered = products.filter(p => p.category.includes("meet") && p.category.includes("greet"));
+    } else if (activeFilter === "park-ride") {
+      filtered = products.filter(p => p.category.includes("park") && p.category.includes("ride"));
     }
     
     // Apply sort
