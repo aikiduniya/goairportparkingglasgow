@@ -49,14 +49,12 @@ const International = () => {
       image: "https://images.unsplash.com/photo-1464037866556-6812c9d1c72e?w=200&h=150&fit=crop&fm=webp&q=50",
     },
     {
-      name: "Southampton",
-      image: "https://images.unsplash.com/photo-1494412651409-8963ce7935a7?w=200&h=150&fit=crop&fm=webp&q=50",
-    },
-    {
       name: "Bristol",
       image: "https://images.unsplash.com/photo-1570710891163-6d3b5c47248b?w=200&h=150&fit=crop&fm=webp&q=50",
     },
   ];
+
+
 
   const irelandAirports = [
     {
@@ -68,11 +66,7 @@ const International = () => {
   const ports = [
     {
       name: "Southampton Port",
-      image: "https://images.unsplash.com/photo-1605281317010-fe5ffe798166?w=200&h=150&fit=crop&fm=webp&q=50",
-    },
-    {
-      name: "Dover Port",
-      image: "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?w=200&h=150&fit=crop&fm=webp&q=50",
+      image: "https://images.unsplash.com/photo-1494412651409-8963ce7935a7?w=200&h=150&fit=crop&fm=webp&q=50",
     },
   ];
 
