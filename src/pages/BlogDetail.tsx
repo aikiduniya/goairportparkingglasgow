@@ -39,22 +39,32 @@ const BlogDetail = () => {
     <div className="min-h-screen bg-background">
       <Header />
       <main className="pt-16 md:pt-20">
-        {/* Hero Image */}
-        <div className="relative aspect-[21/9] max-h-[400px] overflow-hidden">
+        {/* Hero Section */}
+        <div className="relative w-full min-h-[300px] md:min-h-[420px] lg:min-h-[480px] overflow-hidden">
           <img
-            src={blog.image}
+            src={`${blog.image}&w=1400&h=600&fit=crop&q=80`}
             alt={blog.title}
-            className="w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full object-cover object-center"
           />
-          <div className="absolute inset-0 bg-black/40" />
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="text-center text-white px-4">
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/10" />
+          <div className="absolute inset-0 flex items-end">
+            <div className="container mx-auto px-4 pb-10 md:pb-14 max-w-3xl">
               <span className="bg-accent text-accent-foreground text-xs font-semibold px-3 py-1 rounded-full mb-4 inline-block">
                 {blog.category}
               </span>
-              <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold max-w-3xl">
+              <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold text-white leading-tight drop-shadow-lg">
                 {blog.title}
               </h1>
+              <div className="flex items-center gap-4 text-white/80 text-sm mt-4">
+                <div className="flex items-center gap-2">
+                  <Calendar className="w-4 h-4" />
+                  <span>{blog.date}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Eye className="w-4 h-4" />
+                  <span>{blog.views.toLocaleString()} views</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -68,16 +78,9 @@ const BlogDetail = () => {
             </Button>
           </Link>
 
-          <div className="flex items-center gap-4 text-muted-foreground text-sm mb-8">
-            <div className="flex items-center gap-2">
-              <Calendar className="w-4 h-4" />
-              <span>{blog.date}</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Eye className="w-4 h-4" />
-              <span>{blog.views.toLocaleString()} views</span>
-            </div>
-          </div>
+          <article className="prose prose-lg max-w-none text-muted-foreground leading-relaxed">
+            <p>{blog.content}</p>
+          </article>
 
           <article className="prose prose-lg max-w-none text-muted-foreground leading-relaxed">
             <p>{blog.content}</p>
