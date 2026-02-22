@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Phone, Mail, Loader2 } from "lucide-react";
@@ -92,21 +92,28 @@ const ContactUs = () => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
+  useEffect(() => {
+    document.title = "Contact Us - Get in Touch | Airport Parking Support";
+    document.querySelector('meta[name="description"]')?.setAttribute("content", "Contact our 24/7 airport parking support team. Send us a message or call us for booking enquiries, feedback, complaints, or partnership opportunities.");
+    document.querySelector('meta[name="keywords"]')?.setAttribute("content", "contact airport parking, customer support, booking enquiry, airport parking help, phone number, email support");
+  }, []);
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
       
-      {/* Hero Section */}
-      <section className="pt-24 md:pt-32 pb-16 bg-primary">
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground mb-6">
-            Get in Touch
-          </h1>
-          <p className="text-lg md:text-xl text-primary-foreground/80 max-w-2xl mx-auto">
-            We'd love to hear from you. Reach us via form or contact details below.
-          </p>
-        </div>
-      </section>
+      <main className="pt-16 md:pt-20">
+        {/* Hero Section */}
+        <section className="bg-primary py-8 md:py-12">
+          <div className="container mx-auto px-4 text-center">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary-foreground mb-4">
+              Get in Touch
+            </h1>
+            <p className="text-primary-foreground/80 max-w-2xl mx-auto">
+              We'd love to hear from you. Reach us via form or contact details below.
+            </p>
+          </div>
+        </section>
 
       {/* Contact Content */}
       <section className="py-16 md:py-24 bg-cream">
@@ -240,6 +247,8 @@ const ContactUs = () => {
           </div>
         </div>
       </section>
+
+      </main>
 
       <Footer />
     </div>

@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Car, Bus, Sparkles, MapPin } from "lucide-react";
@@ -32,18 +33,25 @@ const International = () => {
     },
   ];
 
+  useEffect(() => {
+    document.title = "Airports We Operate In | UK Airport Parking Services";
+    document.querySelector('meta[name="description"]')?.setAttribute("content", "Discover all UK airports we serve — Birmingham, Heathrow, Manchester, Luton, Dublin, Stansted, Southampton, Bristol. Meet & Greet, Park & Ride, and Valet parking.");
+    document.querySelector('meta[name="keywords"]')?.setAttribute("content", "UK airport parking, Heathrow parking, Manchester airport parking, Birmingham airport parking, Luton parking, meet and greet, park and ride");
+  }, []);
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
       
-      {/* Hero Section */}
-      <section className="pt-24 md:pt-32 pb-16 bg-primary">
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground mb-6">
-            Airports We Operate In
-          </h1>
-        </div>
-      </section>
+      <main className="pt-16 md:pt-20">
+        {/* Hero Section */}
+        <section className="bg-primary py-8 md:py-12">
+          <div className="container mx-auto px-4 text-center">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary-foreground mb-4">
+              Airports We Operate In
+            </h1>
+          </div>
+        </section>
 
       {/* Airports Grid */}
       <section className="py-16 md:py-24 bg-cream">
@@ -109,6 +117,7 @@ const International = () => {
           </div>
         </div>
       </section>
+      </main>
 
       <Footer />
     </div>

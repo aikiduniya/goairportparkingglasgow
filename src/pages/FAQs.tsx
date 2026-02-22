@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Phone } from "lucide-react";
@@ -54,18 +55,25 @@ const FAQs = () => {
     },
   ];
 
+  useEffect(() => {
+    document.title = `FAQs - ${airportName} Parking | Common Questions Answered`;
+    document.querySelector('meta[name="description"]')?.setAttribute("content", `Find answers to common questions about ${airportName} parking services, booking, shuttle transfers, luggage help, cancellation, and more.`);
+    document.querySelector('meta[name="keywords"]')?.setAttribute("content", `${airportName} parking FAQ, airport parking questions, cheap parking, meet and greet FAQ, park and ride FAQ, booking help`);
+  }, [airportName]);
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
 
-      {/* Hero Section */}
-      <section className="pt-24 md:pt-32 pb-16 bg-primary">
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground mb-6">
-            Frequently Asked Questions
-          </h1>
-        </div>
-      </section>
+      <main className="pt-16 md:pt-20">
+        {/* Hero Section */}
+        <section className="bg-primary py-8 md:py-12">
+          <div className="container mx-auto px-4 text-center">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary-foreground mb-4">
+              Frequently Asked Questions
+            </h1>
+          </div>
+        </section>
 
       {/* FAQ Content */}
       <section className="py-16 md:py-24 bg-cream">
@@ -125,6 +133,8 @@ const FAQs = () => {
           </div>
         </div>
       </section>
+
+      </main>
 
       <Footer />
     </div>

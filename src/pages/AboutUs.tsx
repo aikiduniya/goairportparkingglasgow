@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { ArrowRight, Shield, MapPin, Heart, Building, Users, DollarSign, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
@@ -67,15 +68,21 @@ const AboutUs = () => {
     },
   ];
 
+  useEffect(() => {
+    document.title = `About Us - ${title} | Trusted ${airportName} Parking`;
+    document.querySelector('meta[name="description"]')?.setAttribute("content", `Learn about ${title}, your trusted partner for secure and affordable ${airportName} parking. Meet & Greet, Park & Ride, and more.`);
+    document.querySelector('meta[name="keywords"]')?.setAttribute("content", `about ${title}, ${airportName} parking, airport parking UK, trusted parking, meet and greet, park and ride`);
+  }, [title, airportName]);
+
   return (
     <div className="min-h-screen">
       <Header />
-      <main className="pt-20">
+      <main className="pt-16 md:pt-20">
         {/* Hero Section */}
-        <section className="bg-primary py-16 md:py-24">
+        <section className="bg-primary py-8 md:py-12">
           <div className="container mx-auto px-4 text-center">
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">About Us</h1>
-            <p className="text-lg text-primary-foreground/80 max-w-3xl mx-auto">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary-foreground mb-4">About Us</h1>
+            <p className="text-primary-foreground/80 max-w-2xl mx-auto">
               Your trusted partner for {airportName} parking
             </p>
           </div>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Calendar, ArrowRight, X } from "lucide-react";
@@ -64,18 +64,25 @@ const Blogs = () => {
     },
   ];
 
+  useEffect(() => {
+    document.title = "Blog - Airport Parking Tips, Travel Advice & News";
+    document.querySelector('meta[name="description"]')?.setAttribute("content", "Read our latest blog posts on airport parking tips, travel hacks, packing advice, and how to save on holiday travel costs.");
+    document.querySelector('meta[name="keywords"]')?.setAttribute("content", "airport parking blog, travel tips, cheap airport parking, meet and greet tips, packing tips, holiday travel savings");
+  }, []);
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
       
-      {/* Hero Section */}
-      <section className="pt-24 md:pt-32 pb-16 bg-primary">
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground mb-6">
-            Latest Blogs
-          </h1>
-        </div>
-      </section>
+      <main className="pt-16 md:pt-20">
+        {/* Hero Section */}
+        <section className="bg-primary py-8 md:py-12">
+          <div className="container mx-auto px-4 text-center">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary-foreground mb-4">
+              Latest Blogs
+            </h1>
+          </div>
+        </section>
 
       {/* Blogs Grid */}
       <section className="py-16 md:py-24 bg-cream">
@@ -163,6 +170,8 @@ const Blogs = () => {
           )}
         </DialogContent>
       </Dialog>
+
+      </main>
 
       <Footer />
     </div>
