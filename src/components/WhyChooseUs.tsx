@@ -3,14 +3,14 @@ import { Check, Headphones, Building2, Briefcase, Shield, Users, Settings, Packa
 
 const WhyChooseUs = () => {
   const features = [
-    { icon: Check, text: "Guaranteed Parking Availability" },
-    { icon: Headphones, text: "24/7 Customer Support" },
-    { icon: Building2, text: "Service at Terminal" },
-    { icon: Briefcase, text: "Luggage Assistance" },
-    { icon: Shield, text: "Patrolled Car Parks" },
-    { icon: Users, text: "Friendly & Professional Staff" },
-    { icon: Settings, text: "Choice of Service" },
-    { icon: Package, text: "Collected and Dropped Back to the Boot" },
+    { icon: Check, title: "Guaranteed Parking Availability", description: "Reserve your space ahead of time and enjoy worry-free parking at Glasgow Airport, even during busy periods." },
+    { icon: Headphones, title: "24/7 Customer Support", description: "Our friendly team is available around the clock to assist you with bookings, inquiries, and any parking concerns." },
+    { icon: Building2, title: "Convenient Terminal Service", description: "Choose Meet & Greet or Park & Ride options for direct drop-off at the terminal, making travel easier and faster." },
+    { icon: Briefcase, title: "Luggage Assistance", description: "Our staff can help with your luggage, ensuring a smooth start to your journey." },
+    { icon: Shield, title: "Safe & Patrolled Car Parks", description: "Your car is secure in our monitored long stay car park Glasgow Airport facilities, with regular patrols and CCTV coverage." },
+    { icon: Users, title: "Friendly & Professional Staff", description: "Our experienced team is dedicated to providing excellent customer service for every traveler." },
+    { icon: Settings, title: "Flexible Service Options", description: "Pick the parking service that suits your needs — cheap Glasgow Airport parking, long stay, or premium Meet & Greet." },
+    { icon: Package, title: "Collected & Dropped Back to the Boot", description: "For added convenience, we can collect and return your luggage directly to your car, making your journey seamless." },
   ];
 
   const stats = [
@@ -38,13 +38,16 @@ const WhyChooseUs = () => {
           {features.map((feature, index) => (
             <div
               key={index}
-              className="flex items-center gap-3 p-4 rounded-xl bg-muted/50 animate-fade-in"
+              className="flex flex-col gap-3 p-5 rounded-xl bg-muted/50 animate-fade-in"
               style={{ animationDelay: `${index * 50}ms` }}
             >
-              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                <feature.icon className="w-5 h-5 text-primary" />
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                  <feature.icon className="w-5 h-5 text-primary" />
+                </div>
+                <span className="font-semibold text-foreground text-sm">{feature.title}</span>
               </div>
-              <span className="font-medium text-foreground text-sm">{feature.text}</span>
+              <p className="text-muted-foreground text-xs leading-relaxed">{feature.description}</p>
             </div>
           ))}
         </div>
