@@ -10,7 +10,12 @@ const HeroSection = () => {
   const { config } = useDomainConfig();
   const webName = config?.title || "Go Airport Parking";
 
-  const features = ["Pick-up and Drop-Off at Terminal", "2 To 3 Minutes Away From Airport", "Monitored Car Parks", "24/7 Live Support"];
+  const features = [
+    "Pick-up and Drop-Off at Terminal",
+    "2 To 3 Minutes Away From Airport",
+    "Monitored Car Parks",
+    "24/7 Live Support",
+  ];
 
   return (
     <section className="relative min-h-screen pt-20 md:pt-24 overflow-hidden">
@@ -35,7 +40,7 @@ const HeroSection = () => {
           {/* Left Content */}
           <div className="text-primary-foreground animate-slide-in-left text-center lg:text-left">
             <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold leading-tight mb-3 sm:mb-4 text-white">
-              {webName}
+              Secure Glasgow Airport Parking – Meet & Greet & Park and Ride
             </h1>
             <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-medium mb-4 sm:mb-6 opacity-90">
               Save 60% On Your {webName} Space Today.
