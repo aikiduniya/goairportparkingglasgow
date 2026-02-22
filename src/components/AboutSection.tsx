@@ -94,7 +94,7 @@ const AboutSection = () => {
         {/* Brand Description */}
         <div className="mt-16 pt-16 border-t border-border text-center">
           <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-6">
-            {webName} — Trusted Airport Parking Across the UK
+            {webName} — Trusted Airport Parking Across The UK
           </h3>
           <div className="space-y-4 text-muted-foreground leading-relaxed max-w-4xl mx-auto text-justify">
             <p>
