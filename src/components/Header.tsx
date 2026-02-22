@@ -18,6 +18,7 @@ const Header = forwardRef<HTMLElement>((_, ref) => {
 
   const navLinks = [
     { name: "Home", href: "/", isRoute: true },
+    { name: "Services", href: "/services", isRoute: true },
     { name: "About Us", href: "/about", isRoute: true },
     { name: "International", href: "/international", isRoute: true },
     { name: "FAQs", href: "/faqs", isRoute: true },

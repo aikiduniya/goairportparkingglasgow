@@ -31,7 +31,7 @@ const Footer = forwardRef<HTMLElement>((_, ref) => {
 
   const quickLinks = [
     { name: "Why Choose Us", href: "/#why-choose-us", isSection: true, sectionId: "why-choose-us" },
-    { name: "Services", href: "/#services", isSection: true, sectionId: "services" },
+    { name: "Services", href: "/services", isSection: false },
     { name: "About", href: "/about", isSection: false },
     { name: "FAQs", href: "/faqs", isSection: false },
   ];

@@ -26,6 +26,7 @@ const BookingSuccess = lazy(() => import("./pages/BookingSuccess"));
 const Terms = lazy(() => import("./pages/Terms"));
 const Privacy = lazy(() => import("./pages/Privacy"));
 const TestimonialsPage = lazy(() => import("./pages/TestimonialsPage"));
+const ServicesPage = lazy(() => import("./pages/ServicesPage"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
@@ -55,6 +56,7 @@ const App = () => (
               <Route path="/thankyou" element={<BookingSuccess />} />
               <Route path="/terms" element={<Terms />} />
               <Route path="/privacy" element={<Privacy />} />
+              <Route path="/services" element={<ServicesPage />} />
               <Route path="/testimonials" element={<TestimonialsPage />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
