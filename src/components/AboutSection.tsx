@@ -93,7 +93,9 @@ const AboutSection = () => {
 
         {/* Brand Description */}
         <div className="mt-16 pt-16 border-t border-border text-center">
-          <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-6">{webName} — A Trusted UK Brand</h3>
+          <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-6">
+            {webName} — Trusted Airport Parking Across the UK
+          </h3>
           <div className="space-y-4 text-muted-foreground leading-relaxed max-w-4xl mx-auto text-justify">
             <p>
               For over a decade, {webName} has been a trusted name in airport parking services across the UK. Our
