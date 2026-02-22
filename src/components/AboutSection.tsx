@@ -52,14 +52,28 @@ const AboutSection = () => {
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">About {webName}</h2>
             <div className="space-y-4 text-muted-foreground leading-relaxed">
               <p>
-                Welcome to {webName}, the UK's reliable airport parking platform. For over a decade, we've helped
-                thousands of travelers find dependable, affordable parking at major airports across the country. Our
-                reputation is built on a commitment to excellent service and outstanding value.
+                Welcome to {webName}, your trusted choice for secure and affordable airport parking Glasgow travellers
+                can rely on. For over a decade, we have helped thousands of customers find dependable parking at Glasgow
+                Airport, offering competitive prices and professional service.
               </p>
               <p>
-                Now, we're bringing our expertise to {airportName}. Our dedicated local team is focused on delivering
-                seamless, convenient, and tailored service that offers all the quality you expect from the {webName}{" "}
-                brand.
+                We specialise in cheap Glasgow Airport parking without compromising on quality. Whether you need Meet &
+                Greet, Park & Ride, or a secure long stay car park Glasgow Airport solution, we provide convenient
+                options designed to suit every traveller’s needs and budget.
+              </p>
+              <p>
+                Our services cover parking near Glasgow Airport with safe, monitored facilities and efficient transfers
+                to the terminal. From Glasgow Airport parking deals to flexible short and Glasgow Airport long stay
+                options, we focus on delivering outstanding value and a smooth, stress-free experience.
+              </p>
+              <p>
+                If you are looking for cheap car parking Glasgow Airport or reliable airport parking Glasgow
+                International, our experienced local team is committed to providing secure vehicle handling, excellent
+                customer support, and easy online booking.
+              </p>
+              <p>
+                Book today and discover why we are a preferred provider of Glasgow Airport parking services across the
+                UK.
               </p>
             </div>
           </div>
