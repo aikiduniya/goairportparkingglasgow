@@ -4,8 +4,8 @@ import parkviaLogo from "@/assets/partners/parkvia.webp";
 import cloudflareLogo from "@/assets/partners/cloudflare.webp";
 import trustpilotLogo from "@/assets/partners/trustpilot.svg";
 import googleLogo from "@/assets/partners/google-partner.webp";
-import facebookLogo from "@/assets/partners/facebook.png";
-import youtubeLogo from "@/assets/partners/youtube.png";
+import paypalLogo from "@/assets/partners/paypal.svg";
+import worldpayLogo from "@/assets/partners/worldpay.png";
 
 const Partners = () => {
   const partners = [
@@ -15,8 +15,8 @@ const Partners = () => {
     { name: "Cloudflare", logo: cloudflareLogo },
     { name: "Trustpilot", logo: trustpilotLogo },
     { name: "Google Partner", logo: googleLogo },
-    { name: "Facebook", logo: facebookLogo },
-    { name: "YouTube", logo: youtubeLogo },
+    { name: "PayPal", logo: paypalLogo },
+    { name: "Worldpay", logo: worldpayLogo },
   ];
 
   return (
