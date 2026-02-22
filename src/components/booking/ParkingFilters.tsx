@@ -8,8 +8,8 @@ import {
 } from "@/components/ui/select";
 
 interface ParkingFiltersProps {
-  activeFilter: "all" | "meet-greet";
-  setActiveFilter: (filter: "all" | "meet-greet") => void;
+  activeFilter: "all" | "meet-greet" | "park-ride";
+  setActiveFilter: (filter: "all" | "meet-greet" | "park-ride") => void;
   sortBy: "low-to-high" | "high-to-low";
   setSortBy: (sort: "low-to-high" | "high-to-low") => void;
 }
@@ -39,6 +39,14 @@ const ParkingFilters = ({
           className={activeFilter === "meet-greet" ? "bg-primary text-primary-foreground" : ""}
         >
           Meet & Greet
+        </Button>
+        <Button
+          variant={activeFilter === "park-ride" ? "default" : "outline"}
+          size="sm"
+          onClick={() => setActiveFilter("park-ride")}
+          className={activeFilter === "park-ride" ? "bg-primary text-primary-foreground" : ""}
+        >
+          Park & Ride
         </Button>
       </div>
 
