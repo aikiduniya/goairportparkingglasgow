@@ -3,8 +3,31 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Car, Bus, Sparkles, MapPin } from "lucide-react";
 
+const AirportCard = ({ airport, index }: { airport: { name: string; image: string }; index: number }) => (
+  <div
+    className="group relative aspect-[4/3] rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer animate-fade-in"
+    style={{ animationDelay: `${index * 100}ms` }}
+  >
+    <img
+      src={airport.image}
+      alt={airport.name}
+      loading="lazy"
+      width={200}
+      height={150}
+      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+    />
+    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+    <div className="absolute inset-0 flex items-end p-4">
+      <div className="flex items-center gap-2">
+        <MapPin className="w-5 h-5 text-accent" />
+        <h3 className="text-xl font-bold text-white">{airport.name}</h3>
+      </div>
+    </div>
+  </div>
+);
+
 const International = () => {
-  const airports = [
+  const ukAirports = [
     {
       name: "Birmingham",
       image: "https://images.unsplash.com/photo-1583416750470-965b2707b355?w=200&h=150&fit=crop&fm=webp&q=50",
@@ -22,10 +45,6 @@ const International = () => {
       image: "https://images.unsplash.com/photo-1530521954074-e64f6810b32d?w=200&h=150&fit=crop&fm=webp&q=50",
     },
     {
-      name: "Dublin",
-      image: "https://images.unsplash.com/photo-1549918864-48ac978761a4?w=200&h=150&fit=crop&fm=webp&q=50",
-    },
-    {
       name: "Stansted",
       image: "https://images.unsplash.com/photo-1464037866556-6812c9d1c72e?w=200&h=150&fit=crop&fm=webp&q=50",
     },
@@ -36,6 +55,24 @@ const International = () => {
     {
       name: "Bristol",
       image: "https://images.unsplash.com/photo-1570710891163-6d3b5c47248b?w=200&h=150&fit=crop&fm=webp&q=50",
+    },
+  ];
+
+  const irelandAirports = [
+    {
+      name: "Dublin",
+      image: "https://images.unsplash.com/photo-1549918864-48ac978761a4?w=200&h=150&fit=crop&fm=webp&q=50",
+    },
+  ];
+
+  const ports = [
+    {
+      name: "Southampton Port",
+      image: "https://images.unsplash.com/photo-1605281317010-fe5ffe798166?w=200&h=150&fit=crop&fm=webp&q=50",
+    },
+    {
+      name: "Dover Port",
+      image: "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?w=200&h=150&fit=crop&fm=webp&q=50",
     },
   ];
 
@@ -90,32 +127,37 @@ const International = () => {
           </div>
         </section>
 
-        {/* Airports Grid */}
+        {/* UK Airports */}
         <section className="py-16 md:py-24 bg-cream">
           <div className="container mx-auto px-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">UK Airports</h2>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-              {airports.map((airport, index) => (
-                <div
-                  key={index}
-                  className="group relative aspect-[4/3] rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer animate-fade-in"
-                  style={{ animationDelay: `${index * 100}ms` }}
-                >
-                  <img
-                    src={airport.image}
-                    alt={airport.name}
-                    loading="lazy"
-                    width={200}
-                    height={150}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-                  <div className="absolute inset-0 flex items-end p-4">
-                    <div className="flex items-center gap-2">
-                      <MapPin className="w-5 h-5 text-accent" />
-                      <h3 className="text-xl font-bold text-white">{airport.name}</h3>
-                    </div>
-                  </div>
-                </div>
+              {ukAirports.map((airport, index) => (
+                <AirportCard key={index} airport={airport} index={index} />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Ireland Airports */}
+        <section className="py-16 md:py-24 bg-background">
+          <div className="container mx-auto px-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">Ireland Airports</h2>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-md mx-auto lg:max-w-none">
+              {irelandAirports.map((airport, index) => (
+                <AirportCard key={index} airport={airport} index={index} />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Ports */}
+        <section className="py-16 md:py-24 bg-cream">
+          <div className="container mx-auto px-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">Ports</h2>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-2xl mx-auto lg:max-w-none">
+              {ports.map((airport, index) => (
+                <AirportCard key={index} airport={airport} index={index} />
               ))}
             </div>
           </div>
