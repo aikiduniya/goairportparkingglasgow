@@ -12,9 +12,9 @@ const AboutUs = () => {
   const webName = config?.web_name || "Go Airport Parking";
   const airportName = config?.airport_name || "the airport";
   const coreValues = [
-    { title: "Customer Service", icon: Users },
-    { title: "Cost", icon: DollarSign },
-    { title: "Convenience", icon: Star },
+    { title: "Security & Safety", icon: Shield, description: "Ensuring your vehicle is protected in our monitored and patrolled facilities." },
+    { title: "Convenience & Reliability", icon: Star, description: "Offering efficient Meet & Greet and Park & Ride services for hassle-free travel." },
+    { title: "Affordable & Quality Service", icon: DollarSign, description: "Delivering competitive pricing and exceptional customer support at every stage of your journey." },
   ];
 
   const timeline = [
@@ -95,8 +95,11 @@ const AboutUs = () => {
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6 text-center">
                 {title} Mission Statement
               </h2>
-              <p className="text-muted-foreground leading-relaxed text-center mb-12">
-                When parking at {airportName}, make sure to select the correct {title} option and give yourself plenty of time ensuring you enjoy a relaxing and stress-free start to your journey. Being very close to such a busy airport and therefore the high congestion and traffic can create stress and problems at various times in the day. {title} strives to achieve excellence and provide the best Airport Parking experience for yourself and your loved ones. This is measured by our 3 core principles:
+              <p className="text-muted-foreground leading-relaxed text-center mb-4">
+                At {webName}, our mission is to make your journey smooth, convenient, and stress-free. Choosing the right {airportName} Parking option ensures you have plenty of time to start your trip with peace of mind, avoiding the congestion and delays that can occur around busy airports.
+              </p>
+              <p className="text-muted-foreground leading-relaxed text-center mb-4">
+                We are dedicated to providing the best airport parking experience for you and your loved ones, guided by our three core principles:
               </p>
               
               {/* Core Principles */}
@@ -109,10 +112,14 @@ const AboutUs = () => {
                     <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
                       <value.icon className="w-8 h-8 text-primary" />
                     </div>
-                    <h3 className="text-xl font-bold text-foreground">{value.title}</h3>
+                    <h3 className="text-xl font-bold text-foreground mb-2">{value.title}</h3>
+                    <p className="text-muted-foreground text-sm">{value.description}</p>
                   </div>
                 ))}
               </div>
+              <p className="text-muted-foreground leading-relaxed text-center mt-8">
+                Our goal is simple: excellence in {airportName} Parking, so you can travel with confidence, comfort, and peace of mind.
+              </p>
             </div>
           </div>
         </section>
