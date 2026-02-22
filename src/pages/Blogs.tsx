@@ -5,11 +5,8 @@ import Footer from "@/components/Footer";
 import { Calendar, ArrowRight, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { blogPosts } from "@/data/blogs";
-import { useBlogViews } from "@/hooks/useBlogViews";
 
 const Blogs = () => {
-  const viewCounts = useBlogViews();
-
   useEffect(() => {
     document.title = "Blog - Airport Parking Tips, Travel Advice & News";
     document.querySelector('meta[name="description"]')?.setAttribute("content", "Read our latest blog posts on airport parking tips, travel hacks, packing advice, and how to save on holiday travel costs.");
@@ -65,7 +62,7 @@ const Blogs = () => {
                       </div>
                       <div className="flex items-center gap-1">
                         <Eye className="w-4 h-4" />
-                        <span>{(viewCounts[blog.slug] || 0).toLocaleString()} views</span>
+                        <span>{blog.views.toLocaleString()} views</span>
                       </div>
                     </div>
                     <h2 className="text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">

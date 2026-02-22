@@ -14,36 +14,10 @@ export type Database = {
   }
   public: {
     Tables: {
-      blog_views: {
-        Row: {
-          id: string
-          ip_hash: string | null
-          slug: string
-          viewed_at: string
-        }
-        Insert: {
-          id?: string
-          ip_hash?: string | null
-          slug: string
-          viewed_at?: string
-        }
-        Update: {
-          id?: string
-          ip_hash?: string | null
-          slug?: string
-          viewed_at?: string
-        }
-        Relationships: []
-      }
+      [_ in never]: never
     }
     Views: {
-      blog_view_counts: {
-        Row: {
-          slug: string | null
-          view_count: number | null
-        }
-        Relationships: []
-      }
+      [_ in never]: never
     }
     Functions: {
       [_ in never]: never
