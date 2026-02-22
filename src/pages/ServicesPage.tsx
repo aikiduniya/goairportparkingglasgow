@@ -22,9 +22,9 @@ const ServicesPage = () => {
   return (
     <div className="min-h-screen">
       <Header />
-      <main className="pt-20 md:pt-24">
+      <main className="pt-16 md:pt-20">
         {/* Hero */}
-        <section className="bg-primary py-12 md:py-16">
+        <section className="bg-primary py-8 md:py-12">
           <div className="container mx-auto px-4 text-center">
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary-foreground mb-4">Our Services</h1>
             <p className="text-primary-foreground/80 max-w-2xl mx-auto">
@@ -34,7 +34,7 @@ const ServicesPage = () => {
         </section>
 
         {/* Services */}
-        <section className="py-12 md:py-20">
+        <section className="py-8 md:py-12">
           <div className="container mx-auto px-4">
             <div className="max-w-5xl mx-auto space-y-10">
               {services.map((service, index) => (
