@@ -1,14 +1,16 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Calendar, Eye, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { blogPosts } from "@/data/blogs";
+import { useBlogViews } from "@/hooks/useBlogViews";
 
 const BlogDetail = () => {
   const { slug } = useParams<{ slug: string }>();
   const blog = blogPosts.find((b) => b.slug === slug);
+  const viewCounts = useBlogViews(slug);
 
   useEffect(() => {
     if (blog) {
@@ -34,6 +36,8 @@ const BlogDetail = () => {
       </div>
     );
   }
+
+  const currentViews = viewCounts[blog.slug] || 0;
 
   return (
     <div className="min-h-screen bg-background">
@@ -75,7 +79,7 @@ const BlogDetail = () => {
             </div>
             <div className="flex items-center gap-2">
               <Eye className="w-4 h-4" />
-              <span>{blog.views.toLocaleString()} views</span>
+              <span>{currentViews.toLocaleString()} views</span>
             </div>
           </div>
 
