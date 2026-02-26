@@ -93,8 +93,8 @@ const ContactUs = () => {
   };
 
   useEffect(() => {
-    document.title = "Contact Us - Get in Touch | Airport Parking Support";
-    document.querySelector('meta[name="description"]')?.setAttribute("content", "Contact our 24/7 airport parking support team. Send us a message or call us for booking enquiries, feedback, complaints, or partnership opportunities.");
+    document.title = "Contact Go Airport Parking Glasgow | Booking Support & Enquiries";
+    document.querySelector('meta[name="description"]')?.setAttribute("content", "Contact Go Airport Parking Glasgow for quick help with your booking and enquiries. Get fast, friendly support for a stress-free airport experience.");
     document.querySelector('meta[name="keywords"]')?.setAttribute("content", "contact airport parking, customer support, booking enquiry, airport parking help, phone number, email support");
   }, []);
 

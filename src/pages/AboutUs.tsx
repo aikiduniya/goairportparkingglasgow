@@ -90,12 +90,12 @@ const AboutUs = () => {
   ];
 
   useEffect(() => {
-    document.title = `About Us - ${title} | Trusted ${airportName} Parking`;
+    document.title = "About Go Airport Parking Glasgow – Secure & Affordable Airport Parking";
     document
       .querySelector('meta[name="description"]')
       ?.setAttribute(
         "content",
-        `Learn about ${title}, your trusted partner for secure and affordable ${airportName} parking. Meet & Greet, Park & Ride, and more.`,
+        "Learn about Go Airport Parking Glasgow – your trusted provider of secure and affordable airport parking, offering Meet & Greet and Park & Ride services.",
       );
     document
       .querySelector('meta[name="keywords"]')

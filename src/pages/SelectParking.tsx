@@ -88,6 +88,11 @@ const SelectParking = () => {
   const promoCode = searchParams.get("promoCode") || "";
   const traffic_source = searchParams.get("traffic_source") || "";
 
+  useEffect(() => {
+    document.title = "Glasgow Airport Parking | Select Dates & Book Online";
+    document.querySelector('meta[name="description"]')?.setAttribute("content", "Book Glasgow Airport parking easily. Select dates, check available options, and enjoy a smooth, stress-free start to your journey.");
+  }, []);
+
   const [activeFilter, setActiveFilter] = useState<"all" | "meet-greet" | "park-ride">("all");
   const [sortBy, setSortBy] = useState<"low-to-high" | "high-to-low">("low-to-high");
   const [rawProductsHtml, setRawProductsHtml] = useState<string>("");
@@ -298,9 +303,10 @@ const SelectParking = () => {
             {/* Main Content - Parking Options */}
             <div className="lg:col-span-3">
               <div className="bg-card rounded-2xl p-4 md:p-6 shadow-lg">
-                <h1 className="text-xl md:text-2xl font-bold text-foreground mb-4">
+                <h1 className="text-xl md:text-2xl font-bold text-foreground mb-1">
                   Select Glasgow Airport Parking Dates & Options
                 </h1>
+                <p className="text-muted-foreground mb-4">Book your Glasgow Airport parking quickly and stress-free.</p>
 
                 {/* Filters */}
                 <ParkingFilters
