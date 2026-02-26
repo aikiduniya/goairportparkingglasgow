@@ -114,7 +114,7 @@ const AboutUs = () => {
           <div className="container mx-auto px-4 text-center">
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary-foreground mb-4">About Us</h1>
             <p className="text-primary-foreground/80 max-w-2xl mx-auto">
-              About {airportName} parking - Trusted Airport Parking in the UK
+              Your trusted partner for {airportName} parking
             </p>
           </div>
         </section>
