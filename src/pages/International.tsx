@@ -92,12 +92,12 @@ const International = () => {
   ];
 
   useEffect(() => {
-    document.title = "Airports We Operate In | UK Airport Parking Services";
+    document.title = "UK & Dublin Airport Parking – Go Airport Parking Nationwide Services";
     document
       .querySelector('meta[name="description"]')
       ?.setAttribute(
         "content",
-        "Discover all UK airports we serve — Birmingham, Heathrow, Manchester, Luton, Dublin, Stansted, Southampton, Bristol. Meet & Greet, Park & Ride, and Valet parking.",
+        "Discover Go Airport Parking network of airport parking across the UK and Dublin. Secure Meet & Greet and Park & Ride services at all major airports.",
       );
     document
       .querySelector('meta[name="keywords"]')

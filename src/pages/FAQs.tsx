@@ -105,8 +105,8 @@ const FAQs = () => {
   ];
 
   useEffect(() => {
-    document.title = `FAQs - ${airportName} Parking | Common Questions Answered`;
-    document.querySelector('meta[name="description"]')?.setAttribute("content", `Find answers to common questions about ${airportName} parking services, booking, shuttle transfers, luggage help, cancellation, and more.`);
+    document.title = "Glasgow Airport Parking FAQs | Booking Help, Services & Support";
+    document.querySelector('meta[name="description"]')?.setAttribute("content", "Find answers to Glasgow Airport parking questions including bookings, arrivals, services, and parking support before you travel.");
     document.querySelector('meta[name="keywords"]')?.setAttribute("content", `${airportName} parking FAQ, airport parking questions, cheap parking, meet and greet FAQ, park and ride FAQ, booking help`);
   }, [airportName]);
 

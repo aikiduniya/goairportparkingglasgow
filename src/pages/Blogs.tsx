@@ -8,8 +8,8 @@ import { blogPosts } from "@/data/blogs";
 
 const Blogs = () => {
   useEffect(() => {
-    document.title = "Blog - Airport Parking Tips, Travel Advice & News";
-    document.querySelector('meta[name="description"]')?.setAttribute("content", "Read our latest blog posts on airport parking tips, travel hacks, packing advice, and how to save on holiday travel costs.");
+    document.title = "Glasgow Airport Parking Blog | Tips, Guides & Travel Advice";
+    document.querySelector('meta[name="description"]')?.setAttribute("content", "Read helpful Glasgow Airport parking guides, travel tips, and planning advice designed to make your airport experience easier and stress-free.");
     document.querySelector('meta[name="keywords"]')?.setAttribute("content", "airport parking blog, travel tips, cheap airport parking, meet and greet tips, packing tips, holiday travel savings");
   }, []);
 
