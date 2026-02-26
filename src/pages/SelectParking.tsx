@@ -36,7 +36,7 @@ const extractPrice = (element: Element): number => {
     const price = parseFloat(dataPriceAttr.replace(/[€,]/g, ""));
     if (!isNaN(price)) return price;
   }
-  
+
   // Fallback to regex
   const html = element.outerHTML;
   const priceMatch = html.match(/€\s*([\d,.]+)/);
@@ -55,23 +55,23 @@ const getProductCategory = (element: Element): string => {
 // Parse HTML into individual product cards
 const parseProductCards = (html: string): ParsedProduct[] => {
   if (!html) return [];
-  
+
   // Create a temporary container to parse HTML
   const tempDiv = document.createElement("div");
   tempDiv.innerHTML = html;
-  
+
   // Find all product cards with .product-card class (from API structure)
   const cards = tempDiv.querySelectorAll(".product-card");
-  
+
   if (cards.length === 0) {
     // If no cards found, return empty
     return [];
   }
-  
-  return Array.from(cards).map(card => ({
+
+  return Array.from(cards).map((card) => ({
     html: card.outerHTML,
     price: extractPrice(card),
-    category: getProductCategory(card)
+    category: getProductCategory(card),
   }));
 };
 
@@ -79,7 +79,7 @@ const SelectParking = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { config } = useDomainConfig();
-  
+
   // Use exact field names from old PHP flow
   const ParkingFrom = searchParams.get("ParkingFrom") || "";
   const CollectingCar = searchParams.get("CollectingCar") || "";
@@ -87,7 +87,7 @@ const SelectParking = () => {
   const depart_time = searchParams.get("depart_time") || "1200";
   const promoCode = searchParams.get("promoCode") || "";
   const traffic_source = searchParams.get("traffic_source") || "";
-  
+
   const [activeFilter, setActiveFilter] = useState<"all" | "meet-greet" | "park-ride">("all");
   const [sortBy, setSortBy] = useState<"low-to-high" | "high-to-low">("low-to-high");
   const [rawProductsHtml, setRawProductsHtml] = useState<string>("");
@@ -99,15 +99,15 @@ const SelectParking = () => {
   // Parse, filter, and sort products
   const filteredProducts = useMemo(() => {
     const products = parseProductCards(rawProductsHtml);
-    
+
     // Apply filter based on data-category attribute
     let filtered = products;
     if (activeFilter === "meet-greet") {
-      filtered = products.filter(p => p.category.includes("meet") && p.category.includes("greet"));
+      filtered = products.filter((p) => p.category.includes("meet") && p.category.includes("greet"));
     } else if (activeFilter === "park-ride") {
-      filtered = products.filter(p => p.category.includes("park") && p.category.includes("ride"));
+      filtered = products.filter((p) => p.category.includes("park") && p.category.includes("ride"));
     }
-    
+
     // Apply sort
     filtered.sort((a, b) => {
       if (sortBy === "low-to-high") {
@@ -116,17 +116,17 @@ const SelectParking = () => {
         return b.price - a.price;
       }
     });
-    
+
     return filtered;
   }, [rawProductsHtml, activeFilter, sortBy]);
 
   useEffect(() => {
     const fetchProducts = async () => {
       if (!config) return;
-      
+
       setLoading(true);
       setError(null);
-      
+
       try {
         // Build query params for edge function
         const queryParams = new URLSearchParams({
@@ -147,9 +147,9 @@ const SelectParking = () => {
           {
             headers: {
               "Content-Type": "application/json",
-              "apikey": import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+              apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
             },
-          }
+          },
         );
 
         if (!response.ok) {
@@ -157,31 +157,25 @@ const SelectParking = () => {
         }
 
         const result = await response.json();
-        
+
         if (result.error) {
           throw new Error(result.error);
         }
 
         // Inject click handlers for product selection
         let html = result.html || "";
-        
+
         // The HTML from API contains links - we need to intercept them
         // Replace href links to profile.php with our React route
-        html = html.replace(
-          /href=['"]profile\.php\?([^'"]+)['"]/g,
-          (match: string, params: string) => {
-            return `onclick="window.handleParkingSelection('${params}'); return false;" href="#"`;
-          }
-        );
+        html = html.replace(/href=['"]profile\.php\?([^'"]+)['"]/g, (match: string, params: string) => {
+          return `onclick="window.handleParkingSelection('${params}'); return false;" href="#"`;
+        });
 
         // Replace "More Info" button clicks to open modal with product data
         // The API HTML has class "moreInfoBtn" with data attributes
-        html = html.replace(
-          /class="([^"]*moreInfoBtn[^"]*)"/g,
-          (match: string, classes: string) => {
-            return `class="${classes}" onclick="window.handleProductInfo(this); return false;"`;
-          }
-        );
+        html = html.replace(/class="([^"]*moreInfoBtn[^"]*)"/g, (match: string, classes: string) => {
+          return `class="${classes}" onclick="window.handleProductInfo(this); return false;"`;
+        });
 
         setRawProductsHtml(html);
       } catch (err) {
@@ -199,7 +193,7 @@ const SelectParking = () => {
   useEffect(() => {
     (window as any).handleParkingSelection = (queryString: string) => {
       const params = new URLSearchParams(queryString);
-      
+
       // Build new params with exact field names for profile page
       const profileParams = new URLSearchParams({
         selectedDate: params.get("selectedDate") || ParkingFrom,
@@ -222,24 +216,24 @@ const SelectParking = () => {
     (window as any).handleProductInfo = (element: HTMLElement) => {
       // The button itself has all the data attributes from the API
       const name = element.getAttribute("data-name") || element.getAttribute("data-product") || "Product Info";
-      
+
       // Get category from parent product-card element
       const productCard = element.closest(".product-card");
       const category = productCard?.getAttribute("data-category") || "";
-      
+
       // API uses data-introduction for overview
       const introduction = element.getAttribute("data-introduction") || "";
-      
+
       // API uses data-arrival_procedures and data-departure_procedures for procedures
       const arrivalProcedures = element.getAttribute("data-arrival_procedures") || "";
       const departureProcedures = element.getAttribute("data-departure_procedures") || "";
       const securityMeasures = element.getAttribute("data-security_measures") || "";
       const information = element.getAttribute("data-information") || "";
-      
+
       // Combine all procedure-related info
       let procedures = "";
       if (arrivalProcedures) {
-        procedures += `<h3>Arrival Procedures</h3><p>${arrivalProcedures.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&')}</p>`;
+        procedures += `<h3>Arrival Procedures</h3><p>${arrivalProcedures.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&")}</p>`;
       }
       if (departureProcedures) {
         procedures += `<h3>Departure Procedures</h3><p>${departureProcedures}</p>`;
@@ -247,11 +241,11 @@ const SelectParking = () => {
       if (securityMeasures) {
         procedures += `<h3>Security Measures</h3><p>${securityMeasures}</p>`;
       }
-      
+
       // API uses data-logo for product image
       const logo = element.getAttribute("data-logo") || "";
       const photos = logo ? [`https://globalparkingtech.co.uk/logos/products/${logo}`] : [];
-      
+
       // API uses data-map for map embed
       const mapEmbed = element.getAttribute("data-map") || "";
 
@@ -273,12 +267,12 @@ const SelectParking = () => {
   }, [navigate, ParkingFrom, CollectingCar, arrival_time, depart_time, promoCode, traffic_source]);
 
   // Combine filtered products back to HTML
-  const displayHtml = filteredProducts.map(p => p.html).join("");
+  const displayHtml = filteredProducts.map((p) => p.html).join("");
 
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      
+
       {/* Hero Section */}
       <section className="pt-20 md:pt-24 pb-6 bg-primary">
         <div className="container mx-auto px-4">
@@ -305,7 +299,7 @@ const SelectParking = () => {
             <div className="lg:col-span-3">
               <div className="bg-card rounded-2xl p-4 md:p-6 shadow-lg">
                 <h1 className="text-xl md:text-2xl font-bold text-foreground mb-4">
-                  Choose Your Parking
+                  Select Glasgow Airport Parking Dates & Options
                 </h1>
 
                 {/* Filters */}
@@ -334,10 +328,7 @@ const SelectParking = () => {
 
                 {/* Products from API */}
                 {!loading && !error && displayHtml && (
-                  <div 
-                    className="mt-6 parking-products-grid"
-                    dangerouslySetInnerHTML={{ __html: displayHtml }}
-                  />
+                  <div className="mt-6 parking-products-grid" dangerouslySetInnerHTML={{ __html: displayHtml }} />
                 )}
 
                 {/* Empty State */}
@@ -355,11 +346,7 @@ const SelectParking = () => {
       <Footer />
 
       {/* Product Info Modal */}
-      <ProductInfoModal
-        open={infoModalOpen}
-        onOpenChange={setInfoModalOpen}
-        productInfo={selectedProductInfo}
-      />
+      <ProductInfoModal open={infoModalOpen} onOpenChange={setInfoModalOpen} productInfo={selectedProductInfo} />
     </div>
   );
 };
