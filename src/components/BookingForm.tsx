@@ -83,7 +83,7 @@ const BookingForm = () => {
   };
 
   return (
-    <div className="booking-card w-full max-w-md mx-auto lg:mx-0">
+    <div className="booking-card w-full mx-auto lg:mx-0" style={{ maxWidth: '32rem', border: '5px solid #f8ba12' }}>
       {/* Form Logo */}
       <div className="flex items-center gap-2 mb-4 sm:mb-6">
         <img src={logo} alt={config?.title || "Go Airport Parking"} className="h-6 sm:h-8" width={32} height={32} />

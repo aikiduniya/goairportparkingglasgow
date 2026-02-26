@@ -12,46 +12,95 @@ const FAQs = () => {
   const phoneNumber = config?.customer_service || "+44 203 9292 689";
   const airportName = config?.airport_name || "the airport";
 
-  const faqs = [
+  const faqCategories = [
     {
-      question: `What types of parking services do you offer at ${airportName}?`,
-      answer: `We provide Meet & Greet and Park & Ride services, along with secure long stay car park ${airportName} options. You can choose the service that best suits your travel needs.`,
+      title: "Booking & Payments",
+      faqs: [
+        {
+          question: "How do I book Glasgow Airport parking online?",
+          answer: "You can book your Glasgow Airport parking through our secure online system. Simply enter your travel dates, choose your preferred service, and confirm your reservation. You'll receive instant confirmation by email.",
+        },
+        {
+          question: "What payment methods do you accept?",
+          answer: "We accept major debit and credit cards through our secure online checkout. All payments are encrypted to keep your details safe.",
+        },
+        {
+          question: "Can I amend or cancel my booking?",
+          answer: "Yes, bookings can be amended or cancelled in line with our terms and conditions. You can manage your reservation using the link provided in your confirmation email.",
+        },
+        {
+          question: "Is there a booking fee?",
+          answer: "No, we do not charge a separate booking fee. The price shown at checkout is the total you pay for your parking service.",
+        },
+      ],
     },
     {
-      question: `Can I find cheap ${airportName} parking?`,
-      answer: `Yes! We offer competitive rates and special ${airportName} parking deals for both Meet & Greet and Park & Ride services. Booking in advance ensures the best prices.`,
+      title: "Meet & Greet Parking",
+      faqs: [
+        {
+          question: "How does Meet & Greet parking at Glasgow Airport work?",
+          answer: "With Meet & Greet parking, you drive directly to the agreed terminal drop-off point where a trained driver meets you. Your vehicle is parked securely while you travel and returned to you when you land.",
+        },
+        {
+          question: "Is Meet & Greet parking secure?",
+          answer: "Yes, vehicles are parked in secure facilities operated by trusted professionals, giving you peace of mind while you're away.",
+        },
+        {
+          question: "Is Meet & Greet suitable for families or business travelers?",
+          answer: "Yes, Meet & Greet parking is ideal for families with luggage, business travelers, and anyone wanting the fastest and most convenient airport parking option.",
+        },
+      ],
     },
     {
-      question: `How do I book parking at ${airportName}?`,
-      answer: `Booking is simple with our online platform. Select your dates, choose your preferred service, and confirm your booking. You'll receive instant confirmation for airport parking ${airportName}.`,
+      title: "Park & Ride Parking",
+      faqs: [
+        {
+          question: "How does Park & Ride parking work?",
+          answer: "With Park & Ride, you drive to a secure off-site parking location near Glasgow Airport. From there, a shuttle transfer takes you to the terminal quickly and comfortably.",
+        },
+        {
+          question: "Are shuttle transfers included?",
+          answer: "Yes, shuttle transfers to and from Glasgow Airport are included in your Park & Ride booking.",
+        },
+        {
+          question: "How long do shuttle transfers take?",
+          answer: "Shuttle transfer times are typically short and operate regularly to ensure smooth airport access.",
+        },
+      ],
     },
     {
-      question: "Is my car safe while parked?",
-      answer: `Absolutely. All our long stay car park ${airportName} facilities are fully monitored, patrolled, and secured with CCTV to keep your vehicle safe while you travel.`,
+      title: "At the Airport",
+      faqs: [
+        {
+          question: "What should I do when I arrive?",
+          answer: "Arrival instructions are included in your booking confirmation. Follow the directions provided for either Meet & Greet or Park & Ride services.",
+        },
+        {
+          question: "What happens if my flight is delayed?",
+          answer: "If your return flight is delayed, contact the number in your confirmation email. Our team will assist with updated collection or shuttle arrangements.",
+        },
+        {
+          question: "Is long-stay parking available?",
+          answer: "Yes, both Meet & Greet and Park & Ride services are suitable for short-term and long-stay Glasgow Airport parking.",
+        },
+      ],
     },
     {
-      question: "Do you provide shuttle transfers to the terminal?",
-      answer: `Yes, for Park & Ride services we provide fast and reliable shuttle transfers to ${airportName} terminals. For Meet & Greet, our staff will meet you at the terminal and park your car for you.`,
-    },
-    {
-      question: "Can you help with luggage?",
-      answer: "Yes! Our friendly staff assist with your luggage during Meet & Greet service or when dropping off your car for Park & Ride, ensuring a smooth start to your journey.",
-    },
-    {
-      question: "Do I need to book in advance?",
-      answer: `We highly recommend booking ahead to guarantee your parking space and secure the best rates for parking at ${airportName}. Advance booking also ensures a stress-free start to your travel.`,
-    },
-    {
-      question: "Where are your car parks located?",
-      answer: `Our secure ${airportName} parking locations are conveniently near the terminal, providing easy access and efficient transfers, so you can park quickly and start your journey with peace of mind.`,
-    },
-    {
-      question: "Can I cancel or modify my booking?",
-      answer: "Yes, you can modify or cancel your booking according to our terms. Check your booking confirmation or contact our 24/7 customer support team for assistance.",
-    },
-    {
-      question: "Do you offer services at other UK airports?",
-      answer: "Yes, we also provide trusted airport parking across the UK, including Heathrow, Gatwick, Manchester, and more, all with professional service and competitive pricing.",
+      title: "Security & Support",
+      faqs: [
+        {
+          question: "Are your parking facilities secure?",
+          answer: "All parking locations are operated by trusted partners and include security measures to help keep vehicles safe during your trip.",
+        },
+        {
+          question: "Can I get help if my car battery is flat?",
+          answer: "Yes, assistance such as jump-start support may be available at selected parking locations.",
+        },
+        {
+          question: "Who do I contact if I need assistance?",
+          answer: "Customer support details are included in your booking confirmation email. Our team is available to help before, during, and after your trip.",
+        },
+      ],
     },
   ];
 
@@ -86,20 +135,25 @@ const FAQs = () => {
                 Have questions about our services? Here are some of the most common queries from our customers.
               </p>
 
-              <Accordion type="single" collapsible className="space-y-3">
-                {faqs.map((faq, index) => (
-                  <AccordionItem
-                    key={index}
-                    value={`item-${index}`}
-                    className="faq-item bg-card rounded-xl px-6 border-0 shadow-soft"
-                  >
-                    <AccordionTrigger className="text-left font-semibold text-foreground hover:no-underline py-5">
-                      {faq.question}
-                    </AccordionTrigger>
-                    <AccordionContent className="text-muted-foreground pb-5">{faq.answer}</AccordionContent>
-                  </AccordionItem>
-                ))}
-              </Accordion>
+              {faqCategories.map((category, catIndex) => (
+                <div key={catIndex} className="mb-10">
+                  <h3 className="text-xl md:text-2xl font-bold text-foreground mb-4">{category.title}</h3>
+                  <Accordion type="single" collapsible className="space-y-3">
+                    {category.faqs.map((faq, index) => (
+                      <AccordionItem
+                        key={index}
+                        value={`cat-${catIndex}-item-${index}`}
+                        className="faq-item bg-card rounded-xl px-6 border-0 shadow-soft"
+                      >
+                        <AccordionTrigger className="text-left font-semibold text-foreground hover:no-underline py-5">
+                          {faq.question}
+                        </AccordionTrigger>
+                        <AccordionContent className="text-muted-foreground pb-5">{faq.answer}</AccordionContent>
+                      </AccordionItem>
+                    ))}
+                  </Accordion>
+                </div>
+              ))}
 
               <div className="mt-6">
                 <Link to="/contact">
