@@ -5,6 +5,16 @@ import Footer from "@/components/Footer";
 import { Calendar, ArrowRight, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { blogPosts } from "@/data/blogs";
+import blogGlasgowParking from "@/assets/blog-glasgow-parking.webp";
+
+const localImages: Record<string, string> = {
+  "blog-glasgow-parking": blogGlasgowParking,
+};
+
+const getImage = (blog: (typeof blogPosts)[0]) => {
+  if (blog.localImage && localImages[blog.localImage]) return localImages[blog.localImage];
+  return blog.image;
+};
 
 const Blogs = () => {
   useEffect(() => {
@@ -54,7 +64,7 @@ const Blogs = () => {
                   <Link to={`/blogs/${blog.slug}`}>
                     <div className="relative aspect-[3/2] overflow-hidden">
                       <img
-                        src={blog.image}
+                        src={getImage(blog)}
                         alt={blog.title}
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                       />
