@@ -1,5 +1,4 @@
 import { lazy, Suspense } from "react";
-import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 // Lazy load toasters - not needed on initial page load
@@ -35,37 +34,35 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <DomainConfigProvider>
-      <TooltipProvider>
-        <Suspense fallback={null}>
-          <Toaster />
-          <Sonner />
+      <Suspense fallback={null}>
+        <Toaster />
+        <Sonner />
+      </Suspense>
+      <BrowserRouter>
+        <Suspense fallback={<RouteLoading label="Loading page…" />}>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/about" element={<AboutUs />} />
+            <Route path="/international" element={<International />} />
+            <Route path="/faqs" element={<FAQs />} />
+            <Route path="/blogs" element={<Blogs />} />
+            <Route path="/blogs/:slug" element={<BlogDetail />} />
+            <Route path="/contact" element={<ContactUs />} />
+            
+            <Route path="/select-parking" element={<SelectParking />} />
+            <Route path="/booking/profile" element={<BookingProfile />} />
+            <Route path="/booking/confirm" element={<BookingConfirm />} />
+            <Route path="/booking/success" element={<BookingSuccess />} />
+            <Route path="/thankyou" element={<BookingSuccess />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/services" element={<ServicesPage />} />
+            <Route path="/testimonials" element={<TestimonialsPage />} />
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
         </Suspense>
-        <BrowserRouter>
-          <Suspense fallback={<RouteLoading label="Loading page…" />}>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/about" element={<AboutUs />} />
-              <Route path="/international" element={<International />} />
-              <Route path="/faqs" element={<FAQs />} />
-              <Route path="/blogs" element={<Blogs />} />
-              <Route path="/blogs/:slug" element={<BlogDetail />} />
-              <Route path="/contact" element={<ContactUs />} />
-              
-              <Route path="/select-parking" element={<SelectParking />} />
-              <Route path="/booking/profile" element={<BookingProfile />} />
-              <Route path="/booking/confirm" element={<BookingConfirm />} />
-              <Route path="/booking/success" element={<BookingSuccess />} />
-              <Route path="/thankyou" element={<BookingSuccess />} />
-              <Route path="/terms" element={<Terms />} />
-              <Route path="/privacy" element={<Privacy />} />
-              <Route path="/services" element={<ServicesPage />} />
-              <Route path="/testimonials" element={<TestimonialsPage />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Suspense>
-        </BrowserRouter>
-      </TooltipProvider>
+      </BrowserRouter>
     </DomainConfigProvider>
   </QueryClientProvider>
 );
