@@ -34,6 +34,9 @@ const Blogs = () => {
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary-foreground mb-4">
               Glasgow Airport Parking Blog & Travel Guides
             </h1>
+            <p className="text-primary-foreground/80 max-w-2xl mx-auto">
+              Your Ultimate Guide to Glasgow Airport Parking & Travel Tips.
+            </p>
           </div>
         </section>
 
