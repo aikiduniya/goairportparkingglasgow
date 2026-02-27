@@ -9,20 +9,30 @@ import { blogPosts } from "@/data/blogs";
 const Blogs = () => {
   useEffect(() => {
     document.title = "Glasgow Airport Parking Blog | Tips, Guides & Travel Advice";
-    document.querySelector('meta[name="description"]')?.setAttribute("content", "Read helpful Glasgow Airport parking guides, travel tips, and planning advice designed to make your airport experience easier and stress-free.");
-    document.querySelector('meta[name="keywords"]')?.setAttribute("content", "airport parking blog, travel tips, cheap airport parking, meet and greet tips, packing tips, holiday travel savings");
+    document
+      .querySelector('meta[name="description"]')
+      ?.setAttribute(
+        "content",
+        "Read helpful Glasgow Airport parking guides, travel tips, and planning advice designed to make your airport experience easier and stress-free.",
+      );
+    document
+      .querySelector('meta[name="keywords"]')
+      ?.setAttribute(
+        "content",
+        "airport parking blog, travel tips, cheap airport parking, meet and greet tips, packing tips, holiday travel savings",
+      );
   }, []);
 
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      
+
       <main className="pt-16 md:pt-20">
         {/* Hero Section */}
         <section className="bg-primary py-8 md:py-12">
           <div className="container mx-auto px-4 text-center">
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary-foreground mb-4">
-              Latest Blogs
+              Glasgow Airport Parking Blog & Travel Guides
             </h1>
           </div>
         </section>
@@ -68,9 +78,7 @@ const Blogs = () => {
                     <h2 className="text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
                       {blog.title}
                     </h2>
-                    <p className="text-muted-foreground mb-4 line-clamp-2">
-                      {blog.excerpt}
-                    </p>
+                    <p className="text-muted-foreground mb-4 line-clamp-2">{blog.excerpt}</p>
                     <Link to={`/blogs/${blog.slug}`}>
                       <Button
                         variant="ghost"
