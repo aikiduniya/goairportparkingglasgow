@@ -42,13 +42,19 @@
     <link rel="preconnect" href="https://globalparkingtech.co.uk" />
     <link rel="dns-prefetch" href="https://globalparkingtech.co.uk" />
     <link rel="dns-prefetch" href="https://images.unsplash.com" />
-    <!-- Preload hero image for faster LCP -->
+    <!-- Preload LCP image (header logo) for faster discovery -->
+    <link
+      rel="preload"
+      href="https://globalparkingtech.co.uk/logos/1769611943_f4bf76729560026cb896.png"
+      as="image"
+      fetchpriority="high"
+    />
+    <!-- Preload hero image -->
     <link
       rel="preload"
       href="/src/assets/hero-bg-optimized.webp"
       as="image"
       type="image/webp"
-      fetchpriority="high"
     />
     <!-- Google Tag Manager - deferred to improve FCP -->
     <script>
