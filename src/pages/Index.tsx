@@ -2,10 +2,11 @@ import { lazy, Suspense, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
-import HowItWorks from "@/components/HowItWorks";
 
-import FAQSection from "@/components/FAQSection";
-import Footer from "@/components/Footer";
+// Lazy load all below-fold sections to reduce TBT
+const HowItWorks = lazy(() => import("@/components/HowItWorks"));
+const FAQSection = lazy(() => import("@/components/FAQSection"));
+const Footer = lazy(() => import("@/components/Footer"));
 
 // Lazy load below-fold sections to reduce initial JS bundle and improve TTI
 const AboutSection = lazy(() => import("@/components/AboutSection"));
@@ -43,7 +44,9 @@ const Index = () => {
       <Header />
       <main>
         <HeroSection />
-        <HowItWorks />
+        <Suspense fallback={<SectionFallback className="bg-card" />}>
+          <HowItWorks />
+        </Suspense>
         <Suspense fallback={<SectionFallback className="bg-cream" />}>
           <AboutSection />
         </Suspense>
@@ -62,9 +65,13 @@ const Index = () => {
         <Suspense fallback={<SectionFallback className="bg-card" />}>
           <Testimonials />
         </Suspense>
-        <FAQSection />
+        <Suspense fallback={<SectionFallback className="bg-cream" />}>
+          <FAQSection />
+        </Suspense>
       </main>
-      <Footer />
+      <Suspense fallback={<SectionFallback className="bg-primary" />}>
+        <Footer />
+      </Suspense>
       <Suspense fallback={null}>
         <TawkToChat />
       </Suspense>
