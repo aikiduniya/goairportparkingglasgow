@@ -54,8 +54,6 @@ const International = () => {
     },
   ];
 
-
-
   const irelandAirports = [
     {
       name: "Dublin",
@@ -118,6 +116,7 @@ const International = () => {
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary-foreground mb-4">
               Our Airport Parking Network – UK Airports & Dublin Airport
             </h1>
+            <p className="text-primary-foreground/80 max-w-2xl mx-auto">Learn More About Our Network</p>
           </div>
         </section>
 
