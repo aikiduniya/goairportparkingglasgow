@@ -78,13 +78,10 @@ const BlogDetail = () => {
             </Button>
           </Link>
 
-          <article className="prose prose-lg max-w-none text-muted-foreground leading-relaxed">
-            <p>{blog.content}</p>
-          </article>
-
-          <article className="prose prose-lg max-w-none text-muted-foreground leading-relaxed">
-            <p>{blog.content}</p>
-          </article>
+          <article
+            className="prose prose-lg max-w-none text-muted-foreground leading-relaxed"
+            dangerouslySetInnerHTML={{ __html: blog.content }}
+          />
         </div>
       </main>
       <Footer />
