@@ -1,6 +1,6 @@
 import { lazy, Suspense } from "react";
 import { Check } from "lucide-react";
-import heroImage from "@/assets/dublin-airport-compressed.webp";
+import heroImage from "@/assets/hero-bg-optimized.webp";
 import { useDomainConfig } from "@/contexts/DomainConfigContext";
 
 // Lazy load BookingForm to defer react-day-picker and related dependencies
@@ -24,8 +24,8 @@ const HeroSection = () => {
         <img
           src={heroImage}
           alt={webName}
-          width={1920}
-          height={1280}
+          width={960}
+          height={640}
           className="w-full h-full object-cover"
           fetchPriority="high"
           decoding="sync"

@@ -1,5 +1,5 @@
 import { Shield, Users, Building2, BadgeCheck } from "lucide-react";
-import dublinAirportImage from "@/assets/dublin-airport.webp";
+import dublinAirportImage from "@/assets/about-airport-optimized.webp";
 import { useDomainConfig } from "@/contexts/DomainConfigContext";
 
 const AboutSection = () => {
@@ -36,8 +36,8 @@ const AboutSection = () => {
             <img
               src={dublinAirportImage}
               alt={airportName}
-              width={600}
-              height={400}
+              width={768}
+              height={512}
               loading="lazy"
               decoding="async"
               className="w-full h-auto rounded-2xl shadow-strong"
