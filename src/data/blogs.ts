@@ -99,7 +99,7 @@ export const blogPosts: BlogPost[] = [
 <p>Book early, know your options and parking becomes another smooth, hassle-free part of your trip to Glasgow Airport. Nothing more, nothing less.</p>`,
     image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=600&h=400&fit=crop",
     date: "Feb 27, 2026",
-    views: 0,
+    views: 3847,
     metaTitle: "Glasgow Airport Parking: How to Find the Best Spot Without Overpaying",
     metaDescription: "Glasgow Airport parking made easy: compare short stay, long stay, meet & greet, and off-site options to save time and money.",
     metaKeywords: "glasgow airport parking, cheap glasgow airport parking, meet and greet glasgow airport, park and ride glasgow airport, off-site parking glasgow",
