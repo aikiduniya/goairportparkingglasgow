@@ -42,23 +42,32 @@
     <link rel="preconnect" href="https://globalparkingtech.co.uk" crossorigin />
     <link rel="dns-prefetch" href="https://globalparkingtech.co.uk" />
     <link rel="dns-prefetch" href="https://images.unsplash.com" />
-    <!-- Preload LCP image (header logo) for faster First Contentful Paint -->
+    <!-- Preload hero image for faster LCP -->
     <link
       rel="preload"
-      href="https://globalparkingtech.co.uk/logos/1769611943_f4bf76729560026cb896.png"
+      href="/src/assets/dublin-airport-compressed.webp"
       as="image"
+      type="image/webp"
       fetchpriority="high"
-      crossorigin
     />
-    <!-- Google Tag Manager -->
+    <!-- Google Tag Manager - deferred to improve FCP -->
     <script>
-      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer','GTM-NZZPNMMV');
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                })(window,document,'script','dataLayer','GTM-NZZPNMMV');
+        }, 2000);
+      });
     </script>
     <!-- End Google Tag Manager -->
+    <!-- Critical inline styles for faster FCP -->
+    <style>
+      body { margin: 0; font-family: system-ui, -apple-system, sans-serif; }
+      #root { min-height: 100vh; }
+    </style>
   </head>
 
   <body>

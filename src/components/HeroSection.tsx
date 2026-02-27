@@ -18,7 +18,7 @@ const HeroSection = () => {
   ];
 
   return (
-    <section className="relative min-h-screen pt-20 md:pt-24 overflow-hidden">
+    <section className="relative min-h-screen pt-20 md:pt-24 overflow-hidden" style={{ backgroundColor: 'hsl(237, 40%, 24%)' }}>
       {/* Background Image - LCP element */}
       <div className="absolute inset-0">
         <img
