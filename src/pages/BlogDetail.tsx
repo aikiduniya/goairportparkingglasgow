@@ -5,6 +5,16 @@ import Footer from "@/components/Footer";
 import { Calendar, Eye, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { blogPosts } from "@/data/blogs";
+import blogGlasgowParking from "@/assets/blog-glasgow-parking.webp";
+
+const localImages: Record<string, string> = {
+  "blog-glasgow-parking": blogGlasgowParking,
+};
+
+const getImage = (blog: (typeof blogPosts)[0]) => {
+  if (blog.localImage && localImages[blog.localImage]) return localImages[blog.localImage];
+  return blog.image;
+};
 
 const BlogDetail = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -35,6 +45,8 @@ const BlogDetail = () => {
     );
   }
 
+  const heroImage = getImage(blog);
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -42,7 +54,7 @@ const BlogDetail = () => {
         {/* Hero Section */}
         <div className="relative w-full min-h-[300px] md:min-h-[420px] lg:min-h-[480px] overflow-hidden">
           <img
-            src={`${blog.image}&w=1400&h=600&fit=crop&q=80`}
+            src={heroImage}
             alt={blog.title}
             className="absolute inset-0 w-full h-full object-cover object-center"
           />
@@ -79,7 +91,7 @@ const BlogDetail = () => {
           </Link>
 
           <article
-            className="prose prose-lg max-w-none text-muted-foreground leading-relaxed"
+            className="blog-content prose prose-lg max-w-none leading-relaxed"
             dangerouslySetInnerHTML={{ __html: blog.content }}
           />
         </div>

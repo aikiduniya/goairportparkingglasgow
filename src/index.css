@@ -422,3 +422,56 @@
     background: white !important;
   }
 }
+
+/* Blog Content Styling */
+.blog-content {
+  text-align: justify;
+  color: hsl(var(--foreground));
+}
+
+.blog-content h2 {
+  color: hsl(var(--primary));
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  text-align: left;
+  border-bottom: 3px solid hsl(var(--accent));
+  padding-bottom: 0.5rem;
+}
+
+.blog-content h3 {
+  color: hsl(var(--foreground));
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-top: 1.8rem;
+  margin-bottom: 0.75rem;
+  text-align: left;
+}
+
+.blog-content p {
+  margin-bottom: 1.2rem;
+  line-height: 1.85;
+}
+
+.blog-content ol {
+  list-style: decimal;
+  padding-left: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.blog-content ul {
+  list-style: disc;
+  padding-left: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.blog-content li {
+  margin-bottom: 0.5rem;
+  line-height: 1.75;
+}
+
+.blog-content strong {
+  color: hsl(var(--primary));
+  font-weight: 600;
+}
