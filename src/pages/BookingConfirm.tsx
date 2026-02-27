@@ -8,6 +8,9 @@ import BookingStepper from "@/components/booking/BookingStepper";
 import { Button } from "@/components/ui/button";
 import { useDomainConfig } from "@/contexts/DomainConfigContext";
 
+// Preload BookingSuccess chunk so thankyou page loads instantly
+import("./BookingSuccess").catch(() => {});
+
 const BOOKING_FEE = 1.95;
 
 const BookingConfirm = () => {
@@ -45,7 +48,7 @@ const BookingConfirm = () => {
   const [paymentLoading, setPaymentLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [worldpayUrl, setWorldpayUrl] = useState<string | null>(null);
-  const [redirecting, setRedirecting] = useState(false);
+  
 
   // Calculate prices
   const totalPrice = price + BOOKING_FEE;
@@ -191,10 +194,7 @@ const BookingConfirm = () => {
       const result = await response.json();
 
       if (result.paysuccess) {
-        // Show redirecting message
-        setRedirecting(true);
-        
-        // Redirect to thank you page with exact params from old flow
+        // Redirect immediately to thank you page
         const successParams = new URLSearchParams({
           price: totalPrice.toFixed(2),
           ref_id: new_reference,
@@ -210,10 +210,7 @@ const BookingConfirm = () => {
           car_reg: `${Car_Registration} ${Car_Manufacturer} ${Car_Model} ${Car_Colour}`.trim(),
         });
 
-        // Small delay to show redirecting message
-        setTimeout(() => {
-          navigate(`/thankyou?${successParams.toString()}`);
-        }, 500);
+        navigate(`/thankyou?${successParams.toString()}`, { replace: true });
       } else {
         setError(result.error || "Payment processing failed");
       }
@@ -253,9 +250,7 @@ const BookingConfirm = () => {
       const result = await response.json();
 
       if (result.paysuccess) {
-        // Show redirecting message
-        setRedirecting(true);
-        
+        // Redirect immediately to thank you page
         const successParams = new URLSearchParams({
           price: totalPrice.toFixed(2),
           ref_id: new_reference,
@@ -271,10 +266,7 @@ const BookingConfirm = () => {
           car_reg: `${Car_Registration} ${Car_Manufacturer} ${Car_Model} ${Car_Colour}`.trim(),
         });
 
-        // Small delay to show redirecting message
-        setTimeout(() => {
-          navigate(`/thankyou?${successParams.toString()}`);
-        }, 500);
+        navigate(`/thankyou?${successParams.toString()}`, { replace: true });
       } else {
         setError(result.error || "Payment processing failed");
       }
@@ -297,14 +289,6 @@ const BookingConfirm = () => {
         </div>
       </section>
 
-      {/* Redirecting Overlay */}
-      {redirecting && (
-        <div className="fixed inset-0 z-50 bg-background/95 flex flex-col items-center justify-center gap-4">
-          <Loader2 className="w-12 h-12 animate-spin text-primary" />
-          <h2 className="text-xl font-bold text-foreground">Transaction Successful!</h2>
-          <p className="text-muted-foreground">Redirecting to Thank You page...</p>
-        </div>
-      )}
 
       {/* Main Content */}
       <section className="py-6 md:py-8 bg-cream">
