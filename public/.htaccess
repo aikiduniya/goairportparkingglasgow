@@ -1,11 +1,26 @@
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
-  
+
+  # Serve static SEO files directly - do NOT rewrite these
+  RewriteRule ^sitemap\.xml$ - [L]
+  RewriteRule ^robots\.txt$ - [L]
+  RewriteRule ^google6f148081d631e709\.html$ - [L]
+
   # If the requested resource exists as a file or directory, serve it
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
-  
+
   # Otherwise, redirect all requests to index.html
   RewriteRule ^ index.html [L]
+</IfModule>
+
+# Serve sitemap.xml with correct content type
+<IfModule mod_headers.c>
+  <FilesMatch "sitemap\.xml$">
+    Header set Content-Type "application/xml; charset=utf-8"
+  </FilesMatch>
+  <FilesMatch "robots\.txt$">
+    Header set Content-Type "text/plain; charset=utf-8"
+  </FilesMatch>
 </IfModule>
