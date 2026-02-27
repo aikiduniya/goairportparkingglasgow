@@ -49,7 +49,7 @@ const Footer = forwardRef<HTMLElement>((_, ref) => {
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mb-12">
           <div className="col-span-2 md:col-span-1">
             <Link to="/" className="mb-4 inline-block">
-              <img src={logoUrl} alt={title} className="h-10 sm:h-12 w-auto object-contain" />
+              <img src={logoUrl} alt={title} className="h-10 sm:h-12 w-auto object-contain" width="286" height="40" loading="lazy" />
             </Link>
             <p className="text-primary-foreground text-xs sm:text-sm leading-relaxed opacity-90">
               {title} provides reliable, affordable, and convenient parking solutions, trusted by thousands every year.
