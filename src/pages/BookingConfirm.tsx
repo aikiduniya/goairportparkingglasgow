@@ -355,10 +355,10 @@ const BookingConfirm = () => {
                   <h3 className="text-sm font-medium text-foreground mb-3">Payment Methods</h3>
                   <div className="grid grid-cols-2 gap-2 max-w-[200px]">
                     <div className="border border-border rounded-lg p-2 flex items-center justify-center">
-                      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/200px-Visa_Inc._logo.svg.png" alt="Visa" className="h-6 object-contain" />
+                      <img src={visaLogo} alt="Visa" className="h-6 object-contain" />
                     </div>
                     <div className="border border-border rounded-lg p-2 flex items-center justify-center">
-                      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/200px-Mastercard-logo.svg.png" alt="Mastercard" className="h-6 object-contain" />
+                      <img src={mastercardLogo} alt="Mastercard" className="h-6 object-contain" />
                     </div>
                   </div>
                 </div>
