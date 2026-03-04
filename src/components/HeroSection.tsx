@@ -40,7 +40,7 @@ const HeroSection = () => {
           {/* Left Content */}
           <div className="text-primary-foreground animate-slide-in-left text-center lg:text-left">
             <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold leading-tight mb-3 sm:mb-4 text-white">
-              Secure Glasgow Airport Parking – Meet & Greet & Park and Ride
+              {webName}
             </h1>
             <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-medium mb-4 sm:mb-6 opacity-90">
               Save 60% On Your {webName} Space Today.
