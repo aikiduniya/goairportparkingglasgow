@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { format, parse } from "date-fns";
 import { CreditCard, Shield, Lock, AlertCircle, Loader2 } from "lucide-react";
+import visaLogo from "@/assets/partners/visa.svg";
+import mastercardLogo from "@/assets/partners/mastercard.png";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import BookingStepper from "@/components/booking/BookingStepper";
