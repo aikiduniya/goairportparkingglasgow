@@ -21,6 +21,8 @@ const services = [
 ];
 
 const ServicesPage = () => {
+  useCanonical("/services");
+
   useEffect(() => {
     document.title = "Our Services - Meet & Greet & Park & Ride Airport Parking";
     document.querySelector('meta[name="description"]')?.setAttribute("content", "Explore our airport parking services including Meet & Greet and Park & Ride. Convenient, secure, and affordable parking options for every traveller.");

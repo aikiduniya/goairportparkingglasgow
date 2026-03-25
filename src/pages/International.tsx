@@ -90,6 +90,8 @@ const International = () => {
     },
   ];
 
+  useCanonical("/international");
+
   useEffect(() => {
     document.title = "UK & Dublin Airport Parking – Go Airport Parking Nationwide Services";
     document

@@ -118,6 +118,8 @@ const FAQs = () => {
     },
   ];
 
+  useCanonical("/faqs");
+
   useEffect(() => {
     document.title = "Glasgow Airport Parking FAQs | Booking Help, Services & Support";
     document

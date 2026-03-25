@@ -18,6 +18,8 @@ const getImage = (blog: (typeof blogPosts)[0]) => {
 };
 
 const Blogs = () => {
+  useCanonical("/blogs");
+
   useEffect(() => {
     document.title = "Glasgow Airport Parking Blog | Tips, Guides & Travel Advice";
     document

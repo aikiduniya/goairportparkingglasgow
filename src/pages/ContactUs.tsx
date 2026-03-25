@@ -86,6 +86,8 @@ const ContactUs = () => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
+  useCanonical("/contact");
+
   useEffect(() => {
     document.title = "Contact Go Airport Parking Glasgow | Booking Support & Enquiries";
     document

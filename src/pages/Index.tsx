@@ -25,6 +25,7 @@ const SectionFallback = ({ className = "" }: { className?: string }) => (
 
 const Index = () => {
   const location = useLocation();
+  useCanonical("/");
 
   // Handle scroll to section when navigating from another page
   useEffect(() => {

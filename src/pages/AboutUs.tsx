@@ -90,6 +90,8 @@ const AboutUs = () => {
     },
   ];
 
+  useCanonical("/about");
+
   useEffect(() => {
     document.title = `About Us - ${title} | Trusted ${airportName} Parking`;
     document
