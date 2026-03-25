@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { useCanonical } from "@/hooks/useCanonical";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 
@@ -24,6 +25,7 @@ const SectionFallback = ({ className = "" }: { className?: string }) => (
 
 const Index = () => {
   const location = useLocation();
+  useCanonical("/");
 
   // Handle scroll to section when navigating from another page
   useEffect(() => {

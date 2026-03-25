@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useCanonical } from "@/hooks/useCanonical";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Phone, Mail, Loader2 } from "lucide-react";
@@ -84,6 +85,8 @@ const ContactUs = () => {
   const handleChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
+
+  useCanonical("/contact");
 
   useEffect(() => {
     document.title = "Contact Go Airport Parking Glasgow | Booking Support & Enquiries";

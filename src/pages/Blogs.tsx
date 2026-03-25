@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useCanonical } from "@/hooks/useCanonical";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Calendar, ArrowRight, Eye } from "lucide-react";
@@ -17,6 +18,8 @@ const getImage = (blog: (typeof blogPosts)[0]) => {
 };
 
 const Blogs = () => {
+  useCanonical("/blogs");
+
   useEffect(() => {
     document.title = "Glasgow Airport Parking Blog | Tips, Guides & Travel Advice";
     document

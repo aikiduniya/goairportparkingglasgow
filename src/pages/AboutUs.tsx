@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { ArrowRight, Shield, MapPin, Heart, Building, Users, DollarSign, Star } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useCanonical } from "@/hooks/useCanonical";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -88,6 +89,8 @@ const AboutUs = () => {
         "Enhance your journey with optional services such as valet parking, luggage assistance, car care, and more. Choose the extras that add real value to your trip.",
     },
   ];
+
+  useCanonical("/about");
 
   useEffect(() => {
     document.title = `About Us - ${title} | Trusted ${airportName} Parking`;

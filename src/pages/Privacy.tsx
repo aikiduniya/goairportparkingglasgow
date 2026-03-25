@@ -1,8 +1,10 @@
+import { useCanonical } from "@/hooks/useCanonical";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useDomainConfig } from "@/contexts/DomainConfigContext";
 
 const Privacy = () => {
+  useCanonical("/privacy");
   const { config, loading } = useDomainConfig();
   const companyName = config?.legal_name || config?.title || "Go Airport Parking";
 

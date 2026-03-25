@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
+import { useCanonical } from "@/hooks/useCanonical";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Calendar, Eye, ArrowLeft } from "lucide-react";
@@ -19,6 +20,7 @@ const getImage = (blog: (typeof blogPosts)[0]) => {
 const BlogDetail = () => {
   const { slug } = useParams<{ slug: string }>();
   const blog = blogPosts.find((b) => b.slug === slug);
+  useCanonical(`/blogs/${slug}`);
 
   useEffect(() => {
     if (blog) {

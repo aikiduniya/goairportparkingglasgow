@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
+import { useCanonical } from "@/hooks/useCanonical";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import BookingStepper from "@/components/booking/BookingStepper";
@@ -87,6 +88,8 @@ const SelectParking = () => {
   const depart_time = searchParams.get("depart_time") || "1200";
   const promoCode = searchParams.get("promoCode") || "";
   const traffic_source = searchParams.get("traffic_source") || "";
+
+  useCanonical("/select-parking");
 
   useEffect(() => {
     document.title = "Glasgow Airport Parking | Select Dates & Book Online";
