@@ -9,6 +9,7 @@ import trustpilotStars from "@/assets/partners/trustpilot-stars.svg";
 import facebookIcon from "@/assets/partners/facebook-icon.png";
 
 const TestimonialsPage = () => {
+  useCanonical("/testimonials");
   const googleReviews = [
     {
       name: "Emma W",
