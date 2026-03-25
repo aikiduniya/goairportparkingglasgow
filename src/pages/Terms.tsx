@@ -5,7 +5,6 @@ import Footer from "@/components/Footer";
 const Terms = () => {
   useCanonical("/terms");
   return (
-  return (
     <div className="min-h-screen bg-background">
       <Header />
       <main className="container mx-auto px-4 py-12 max-w-4xl">
