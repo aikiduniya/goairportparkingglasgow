@@ -7,11 +7,9 @@ const useCanonical = () => {
   const location = useLocation();
 
   useEffect(() => {
-    const domain = config?.domain
-      ? `https://${config.domain.replace(/^https?:\/\//, "").replace(/\/$/, "")}`
-      : "https://goairportparkingglasgow.com";
-
-    const path = location.pathname === "/" ? "" : location.pathname;
+    const rawDomain = config?.domain || "goairportparkingglasgow.com";
+    const domain = `https://${rawDomain.replace(/^https?:\/\//, "").replace(/\/$/, "")}`;
+    const path = location.pathname === "/" ? "" : location.pathname.replace(/\/$/, "");
     const canonicalUrl = `${domain}${path}`;
 
     let link = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;

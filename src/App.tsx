@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { DomainConfigProvider } from "./contexts/DomainConfigContext";
 import Index from "./pages/Index";
 import RouteLoading from "@/components/RouteLoading";
+import useCanonical from "@/hooks/useCanonical";
 
 // Lazy load Sonner toaster - not needed on initial page load
 const Sonner = lazy(() => import("@/components/ui/sonner").then(m => ({ default: m.Toaster })));
@@ -31,6 +32,11 @@ const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
 
+const CanonicalHandler = () => {
+  useCanonical();
+  return null;
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <DomainConfigProvider>
@@ -39,6 +45,7 @@ const App = () => (
         <Sonner />
       </Suspense>
       <BrowserRouter>
+        <CanonicalHandler />
         <Suspense fallback={<RouteLoading label="Loading page…" />}>
           <Routes>
             <Route path="/" element={<Index />} />
