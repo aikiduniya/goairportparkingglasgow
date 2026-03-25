@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Star } from "lucide-react";
-import { useCanonical } from "@/hooks/useCanonical";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -9,7 +8,6 @@ import trustpilotStars from "@/assets/partners/trustpilot-stars.svg";
 import facebookIcon from "@/assets/partners/facebook-icon.png";
 
 const TestimonialsPage = () => {
-  useCanonical("/testimonials");
   const googleReviews = [
     {
       name: "Emma W",

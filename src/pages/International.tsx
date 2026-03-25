@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { useCanonical } from "@/hooks/useCanonical";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Car, Bus, Sparkles, MapPin } from "lucide-react";
@@ -89,8 +88,6 @@ const International = () => {
         "Experience full luxury valet service at the terminal. Hand over your keys and enjoy a seamless, stress-free journey.",
     },
   ];
-
-  useCanonical("/international");
 
   useEffect(() => {
     document.title = "UK & Dublin Airport Parking – Go Airport Parking Nationwide Services";
