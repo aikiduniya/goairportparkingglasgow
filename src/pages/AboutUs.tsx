@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { ArrowRight, Shield, MapPin, Heart, Building, Users, DollarSign, Star } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useCanonical } from "@/hooks/useCanonical";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
