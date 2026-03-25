@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { useCanonical } from "@/hooks/useCanonical";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 
