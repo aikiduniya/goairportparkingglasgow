@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useCanonical } from "@/hooks/useCanonical";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Phone, Mail, Loader2 } from "lucide-react";
