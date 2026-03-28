@@ -78,7 +78,7 @@ const BookingConfirm = () => {
   // Initialize Worldpay payment session
   useEffect(() => {
     const initPayment = async () => {
-      if (!new_reference) {
+      if (!new_reference || isPayOnArrival) {
         setPaymentLoading(false);
         return;
       }
