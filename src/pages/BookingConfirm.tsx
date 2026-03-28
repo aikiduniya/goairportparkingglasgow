@@ -350,55 +350,91 @@ const BookingConfirm = () => {
 
             {/* Payment Details */}
             <div className="bg-card rounded-2xl p-4 md:p-6 shadow-lg">
-              <h2 className="text-xl font-bold text-foreground mb-6">Payment Details</h2>
+              <h2 className="text-xl font-bold text-foreground mb-6">
+                {isPayOnArrival ? "Complete Booking" : "Payment Details"}
+              </h2>
 
               <div className="space-y-6">
-                {/* Payment Method Selection */}
-                <div>
-                  <h3 className="text-sm font-medium text-foreground mb-3">Payment Methods</h3>
-                  <div className="grid grid-cols-2 gap-2 max-w-[200px]">
-                    <div className="border border-border rounded-lg p-2 flex items-center justify-center">
-                      <img src={visaLogo} alt="Visa" className="h-6 object-contain" />
+                {isPayOnArrival ? (
+                  <>
+                    {/* Pay on Arrival */}
+                    <div className="bg-primary/5 rounded-lg p-4 text-center">
+                      <p className="text-sm text-muted-foreground mb-2">No online payment required</p>
+                      <p className="text-lg font-semibold text-foreground">Pay {config?.cur || "€"}{totalPrice.toFixed(2)} on arrival</p>
                     </div>
-                    <div className="border border-border rounded-lg p-2 flex items-center justify-center">
-                      <img src={mastercardLogo} alt="Mastercard" className="h-6 object-contain" />
-                    </div>
-                  </div>
-                </div>
 
-                {/* Worldpay Integration Container */}
-                <div 
-                  id="custom-html" 
-                  ref={paymentContainerRef}
-                  className="border border-border rounded-lg min-h-[300px] overflow-hidden"
-                >
-                  {paymentLoading ? (
-                    <div className="flex flex-col items-center justify-center h-[300px] gap-3 text-muted-foreground">
-                      <Loader2 className="w-8 h-8 animate-spin text-primary" />
-                      <span className="font-medium">Loading secure payment form...</span>
-                      <span className="text-xs">Please wait while we connect to Worldpay</span>
-                    </div>
-                  ) : error && !worldpayUrl ? (
-                    <div className="flex flex-col items-center justify-center h-[300px] gap-3">
-                      <AlertCircle className="w-12 h-12 text-destructive" />
-                      <p className="text-sm text-destructive font-medium">Failed to load payment gateway</p>
-                      <Button 
-                        variant="outline" 
-                        size="sm"
-                        onClick={() => window.location.reload()}
-                      >
-                        Try Again
-                      </Button>
-                    </div>
-                  ) : null}
-                </div>
+                    <Button
+                      className="w-full h-12 text-base font-semibold bg-accent hover:bg-accent/90 text-accent-foreground"
+                      onClick={handlePayOnArrival}
+                      disabled={loading}
+                    >
+                      {loading ? (
+                        <>
+                          <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                          Processing...
+                        </>
+                      ) : (
+                        "Confirm Booking — Pay on Arrival"
+                      )}
+                    </Button>
 
-                {/* Error Message */}
-                {error && worldpayUrl && (
-                  <div className="flex items-center gap-2 p-3 bg-destructive/10 rounded-lg text-destructive text-sm">
-                    <AlertCircle className="w-4 h-4" />
-                    <span>{error}</span>
-                  </div>
+                    {error && (
+                      <div className="flex items-center gap-2 p-3 bg-destructive/10 rounded-lg text-destructive text-sm">
+                        <AlertCircle className="w-4 h-4" />
+                        <span>{error}</span>
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <>
+                    {/* Payment Method Selection */}
+                    <div>
+                      <h3 className="text-sm font-medium text-foreground mb-3">Payment Methods</h3>
+                      <div className="grid grid-cols-2 gap-2 max-w-[200px]">
+                        <div className="border border-border rounded-lg p-2 flex items-center justify-center">
+                          <img src={visaLogo} alt="Visa" className="h-6 object-contain" />
+                        </div>
+                        <div className="border border-border rounded-lg p-2 flex items-center justify-center">
+                          <img src={mastercardLogo} alt="Mastercard" className="h-6 object-contain" />
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Worldpay Integration Container */}
+                    <div 
+                      id="custom-html" 
+                      ref={paymentContainerRef}
+                      className="border border-border rounded-lg min-h-[300px] overflow-hidden"
+                    >
+                      {paymentLoading ? (
+                        <div className="flex flex-col items-center justify-center h-[300px] gap-3 text-muted-foreground">
+                          <Loader2 className="w-8 h-8 animate-spin text-primary" />
+                          <span className="font-medium">Loading secure payment form...</span>
+                          <span className="text-xs">Please wait while we connect to Worldpay</span>
+                        </div>
+                      ) : error && !worldpayUrl ? (
+                        <div className="flex flex-col items-center justify-center h-[300px] gap-3">
+                          <AlertCircle className="w-12 h-12 text-destructive" />
+                          <p className="text-sm text-destructive font-medium">Failed to load payment gateway</p>
+                          <Button 
+                            variant="outline" 
+                            size="sm"
+                            onClick={() => window.location.reload()}
+                          >
+                            Try Again
+                          </Button>
+                        </div>
+                      ) : null}
+                    </div>
+
+                    {/* Error Message */}
+                    {error && worldpayUrl && (
+                      <div className="flex items-center gap-2 p-3 bg-destructive/10 rounded-lg text-destructive text-sm">
+                        <AlertCircle className="w-4 h-4" />
+                        <span>{error}</span>
+                      </div>
+                    )}
+                  </>
                 )}
 
                 {/* Security Badge */}
