@@ -356,7 +356,12 @@ const BookingConfirm = () => {
               </h2>
 
               <div className="space-y-6">
-                {isPayOnArrival ? (
+                {configLoading ? (
+                  <div className="flex items-center justify-center h-[300px] gap-3 text-muted-foreground">
+                    <Loader2 className="w-8 h-8 animate-spin text-primary" />
+                    <span className="font-medium">Loading...</span>
+                  </div>
+                ) : isPayOnArrival ? (
                   <>
                     {/* Pay on Arrival */}
                     <div className="bg-primary/5 rounded-lg p-4 text-center">
