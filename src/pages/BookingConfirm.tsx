@@ -50,6 +50,9 @@ const BookingConfirm = () => {
   const [paymentLoading, setPaymentLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [worldpayUrl, setWorldpayUrl] = useState<string | null>(null);
+
+  // Check if payment gateway should be shown
+  const isPayOnArrival = !config?.secret_key?.trim() && !config?.publisher_key?.trim();
   
 
   // Calculate prices
