@@ -116,7 +116,7 @@ const BookingConfirm = () => {
     };
 
     initPayment();
-  }, [new_reference, amount, currency]);
+  }, [new_reference, amount, currency, isPayOnArrival]);
 
   // Load Worldpay embedded library and initialize iframe
   useEffect(() => {
