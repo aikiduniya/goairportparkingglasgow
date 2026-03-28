@@ -52,8 +52,9 @@ const BookingConfirm = () => {
   const [worldpayUrl, setWorldpayUrl] = useState<string | null>(null);
 
   // Check if payment gateway should be shown
-  const isPayOnArrival = !config?.secret_key?.trim() && !config?.publisher_key?.trim();
-  
+  // Only decide after config has loaded; default to payment gateway (false) while loading
+  const isPayOnArrival = config ? (!config.secret_key?.trim() && !config.publisher_key?.trim()) : false;
+  const { loading: configLoading } = useDomainConfig();
 
   // Calculate prices
   const totalPrice = price + BOOKING_FEE;
