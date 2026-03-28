@@ -52,8 +52,9 @@ const BookingConfirm = () => {
   const [worldpayUrl, setWorldpayUrl] = useState<string | null>(null);
 
   // Check if payment gateway should be shown
-  const isPayOnArrival = !config?.secret_key?.trim() && !config?.publisher_key?.trim();
-  
+  // Only decide after config has loaded; default to payment gateway (false) while loading
+  const isPayOnArrival = config ? (!config.secret_key?.trim() && !config.publisher_key?.trim()) : false;
+  const { loading: configLoading } = useDomainConfig();
 
   // Calculate prices
   const totalPrice = price + BOOKING_FEE;
@@ -355,7 +356,12 @@ const BookingConfirm = () => {
               </h2>
 
               <div className="space-y-6">
-                {isPayOnArrival ? (
+                {configLoading ? (
+                  <div className="flex items-center justify-center h-[300px] gap-3 text-muted-foreground">
+                    <Loader2 className="w-8 h-8 animate-spin text-primary" />
+                    <span className="font-medium">Loading...</span>
+                  </div>
+                ) : isPayOnArrival ? (
                   <>
                     {/* Pay on Arrival */}
                     <div className="bg-primary/5 rounded-lg p-4 text-center">
