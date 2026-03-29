@@ -1,7 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { format, parse } from "date-fns";
 import { Shield, AlertCircle, Loader2 } from "lucide-react";
+import { loadStripe } from "@stripe/stripe-js";
+import { EmbeddedCheckoutProvider, EmbeddedCheckout } from "@stripe/react-stripe-js";
 import visaLogo from "@/assets/partners/visa.svg";
 import mastercardLogo from "@/assets/partners/mastercard.png";
 import Header from "@/components/Header";
@@ -20,7 +22,7 @@ const BookingConfirm = () => {
   const navigate = useNavigate();
   const { config, loading: configLoading } = useDomainConfig();
 
-  // Read all params from query string (exact names from old PHP flow)
+  // Read all params from query string
   const new_reference = searchParams.get("new_reference") || "";
   const booking_last_inserted_id = searchParams.get("booking_last_inserted_id") || "";
   const price = parseFloat(searchParams.get("price") || "0");
@@ -47,13 +49,16 @@ const BookingConfirm = () => {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [stripePromise, setStripePromise] = useState<ReturnType<typeof loadStripe> | null>(null);
+  const [clientSecret, setClientSecret] = useState<string | null>(null);
+  const [paymentLoading, setPaymentLoading] = useState(true);
 
   // Check if payment gateway should be shown
   const isPayOnArrival = config ? (!config.secret_key?.trim() && !config.publisher_key?.trim()) : false;
 
   // Calculate prices
   const totalPrice = price + BOOKING_FEE;
-  const amount = Math.round(totalPrice * 100); // Stripe expects amount in cents
+  const amount = Math.round(totalPrice * 100);
   const currency = config?.cur === "£" ? "GBP" : "EUR";
 
   const formatDateDisplay = (dateStr: string, time: string) => {
@@ -70,8 +75,8 @@ const BookingConfirm = () => {
     }
   };
 
-  // Build the success URL for Stripe redirect back
-  const buildSuccessReturnUrl = () => {
+  // Build the return URL for after Stripe payment
+  const buildReturnUrl = () => {
     const returnParams = new URLSearchParams({
       booking_last_inserted_id,
       email: Email,
@@ -92,50 +97,54 @@ const BookingConfirm = () => {
     return `${window.location.origin}/payment-return?${returnParams.toString()}`;
   };
 
-  const handlePayWithStripe = async () => {
-    setLoading(true);
-    setError(null);
-
-    try {
-      const successUrl = buildSuccessReturnUrl();
-      const cancelUrl = window.location.href; // Return to this page on cancel
-
-      const response = await fetch(
-        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/create-stripe-session`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "apikey": import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
-          },
-          body: JSON.stringify({
-            ref_id: new_reference,
-            amount,
-            currency,
-            success_url: successUrl,
-            cancel_url: cancelUrl,
-          }),
-        }
-      );
-
-      const result = await response.json();
-
-      if (result.error) {
-        throw new Error(result.error);
-      }
-
-      // Redirect to Stripe Checkout
-      if (result.url) {
-        window.location.href = result.url;
-      } else {
-        throw new Error("No checkout URL received");
-      }
-    } catch (err) {
-      console.error("Error creating Stripe session:", err);
-      setError(err instanceof Error ? err.message : "Failed to initialize payment");
-      setLoading(false);
+  // Initialize Stripe embedded checkout
+  useEffect(() => {
+    if (!new_reference || isPayOnArrival || configLoading) {
+      setPaymentLoading(false);
+      return;
     }
-  };
+
+    const initStripe = async () => {
+      try {
+        const returnUrl = buildReturnUrl();
+
+        const response = await fetch(
+          `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/create-stripe-session`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "apikey": import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+            },
+            body: JSON.stringify({
+              ref_id: new_reference,
+              amount,
+              currency,
+              return_url: returnUrl,
+            }),
+          }
+        );
+
+        const result = await response.json();
+
+        if (result.error) {
+          throw new Error(result.error);
+        }
+
+        if (result.publishable_key) {
+          setStripePromise(loadStripe(result.publishable_key));
+        }
+        setClientSecret(result.client_secret);
+      } catch (err) {
+        console.error("Error creating Stripe session:", err);
+        setError(err instanceof Error ? err.message : "Failed to initialize payment");
+      } finally {
+        setPaymentLoading(false);
+      }
+    };
+
+    initStripe();
+  }, [new_reference, amount, currency, isPayOnArrival, configLoading]);
 
   const handlePayOnArrival = async () => {
     setLoading(true);
@@ -270,7 +279,6 @@ const BookingConfirm = () => {
                   </div>
                 ) : isPayOnArrival ? (
                   <>
-                    {/* Pay on Arrival */}
                     <div className="bg-primary/5 rounded-lg p-4 text-center">
                       <p className="text-sm text-muted-foreground mb-2">No online payment required</p>
                       <p className="text-lg font-semibold text-foreground">Pay {config?.cur || "€"}{totalPrice.toFixed(2)} on arrival</p>
@@ -300,7 +308,7 @@ const BookingConfirm = () => {
                   </>
                 ) : (
                   <>
-                    {/* Stripe Payment */}
+                    {/* Payment Method Logos */}
                     <div>
                       <h3 className="text-sm font-medium text-foreground mb-3">Payment Methods</h3>
                       <div className="grid grid-cols-2 gap-2 max-w-[200px]">
@@ -313,27 +321,36 @@ const BookingConfirm = () => {
                       </div>
                     </div>
 
-                    <div className="bg-primary/5 rounded-lg p-4 text-center">
-                      <p className="text-sm text-muted-foreground mb-2">Secure payment via Stripe</p>
-                      <p className="text-lg font-semibold text-foreground">Total: {config?.cur || "€"}{totalPrice.toFixed(2)}</p>
+                    {/* Stripe Embedded Checkout */}
+                    <div className="min-h-[300px]">
+                      {paymentLoading ? (
+                        <div className="flex flex-col items-center justify-center h-[300px] gap-3 text-muted-foreground">
+                          <Loader2 className="w-8 h-8 animate-spin text-primary" />
+                          <span className="font-medium">Loading secure payment form...</span>
+                        </div>
+                      ) : error && !clientSecret ? (
+                        <div className="flex flex-col items-center justify-center h-[300px] gap-3">
+                          <AlertCircle className="w-12 h-12 text-destructive" />
+                          <p className="text-sm text-destructive font-medium">Failed to load payment form</p>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => window.location.reload()}
+                          >
+                            Try Again
+                          </Button>
+                        </div>
+                      ) : stripePromise && clientSecret ? (
+                        <EmbeddedCheckoutProvider
+                          stripe={stripePromise}
+                          options={{ clientSecret }}
+                        >
+                          <EmbeddedCheckout />
+                        </EmbeddedCheckoutProvider>
+                      ) : null}
                     </div>
 
-                    <Button
-                      className="w-full h-12 text-base font-semibold bg-accent hover:bg-accent/90 text-accent-foreground"
-                      onClick={handlePayWithStripe}
-                      disabled={loading}
-                    >
-                      {loading ? (
-                        <>
-                          <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                          Redirecting to payment...
-                        </>
-                      ) : (
-                        `Pay ${config?.cur || "€"}${totalPrice.toFixed(2)} — Secure Checkout`
-                      )}
-                    </Button>
-
-                    {error && (
+                    {error && clientSecret && (
                       <div className="flex items-center gap-2 p-3 bg-destructive/10 rounded-lg text-destructive text-sm">
                         <AlertCircle className="w-4 h-4" />
                         <span>{error}</span>
@@ -347,7 +364,6 @@ const BookingConfirm = () => {
                   <Shield className="w-4 h-4 text-green-500" />
                   <span>All payments are encrypted & 100% secure</span>
                 </div>
-
               </div>
             </div>
           </div>
