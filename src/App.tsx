@@ -23,6 +23,7 @@ const SelectParking = lazy(() => import("./pages/SelectParking"));
 const BookingProfile = lazy(() => import("./pages/BookingProfile"));
 const BookingConfirm = lazy(() => import("./pages/BookingConfirm"));
 const BookingSuccess = lazy(() => import("./pages/BookingSuccess"));
+const PaymentReturn = lazy(() => import("./pages/PaymentReturn"));
 const Terms = lazy(() => import("./pages/Terms"));
 const Privacy = lazy(() => import("./pages/Privacy"));
 const TestimonialsPage = lazy(() => import("./pages/TestimonialsPage"));
@@ -61,6 +62,7 @@ const App = () => (
             <Route path="/booking/confirm" element={<BookingConfirm />} />
             <Route path="/booking/success" element={<BookingSuccess />} />
             <Route path="/thankyou" element={<BookingSuccess />} />
+            <Route path="/payment-return" element={<PaymentReturn />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/services" element={<ServicesPage />} />
