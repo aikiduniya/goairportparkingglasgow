@@ -23,6 +23,7 @@ const SelectParking = lazy(() => import("./pages/SelectParking"));
 const BookingProfile = lazy(() => import("./pages/BookingProfile"));
 const BookingConfirm = lazy(() => import("./pages/BookingConfirm"));
 const BookingSuccess = lazy(() => import("./pages/BookingSuccess"));
+const PaymentReturn = lazy(() => import("./pages/PaymentReturn"));
 const Terms = lazy(() => import("./pages/Terms"));
 const Privacy = lazy(() => import("./pages/Privacy"));
 const TestimonialsPage = lazy(() => import("./pages/TestimonialsPage"));
