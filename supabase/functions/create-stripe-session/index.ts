@@ -12,23 +12,24 @@ serve(async (req) => {
 
   try {
     const body = await req.json();
-    const { ref_id, amount, currency, success_url, cancel_url } = body;
+    const { ref_id, amount, currency, return_url } = body;
 
     const stripeSecretKey = Deno.env.get("STRIPE_SECRET_KEY");
+    const stripePublishableKey = Deno.env.get("STRIPE_PUBLISHABLE_KEY");
     if (!stripeSecretKey) {
       throw new Error("Missing Stripe secret key");
     }
 
-    console.log("Creating Stripe Checkout session for:", ref_id, "amount:", amount, "currency:", currency);
+    console.log("Creating Stripe embedded checkout session for:", ref_id, "amount:", amount, "currency:", currency);
 
     const params = new URLSearchParams();
     params.append("payment_method_types[0]", "card");
     params.append("mode", "payment");
+    params.append("ui_mode", "embedded");
     params.append("line_items[0][price_data][currency]", currency.toLowerCase());
     params.append("line_items[0][price_data][unit_amount]", String(Math.round(amount)));
     params.append("line_items[0][price_data][product_data][name]", `Parking Booking - ${ref_id}`);
-    params.append("success_url", success_url);
-    params.append("cancel_url", cancel_url);
+    params.append("return_url", return_url);
     params.append("client_reference_id", ref_id);
 
     const response = await fetch("https://api.stripe.com/v1/checkout/sessions", {
@@ -47,9 +48,12 @@ serve(async (req) => {
       throw new Error(data.error?.message || `Stripe API error: ${response.status}`);
     }
 
-    console.log("Stripe session created:", data.id);
+    console.log("Stripe embedded session created:", data.id);
 
-    return new Response(JSON.stringify({ url: data.url, session_id: data.id }), {
+    return new Response(JSON.stringify({ 
+      client_secret: data.client_secret,
+      publishable_key: stripePublishableKey || "",
+    }), {
       status: 200,
       headers: { "Content-Type": "application/json", ...corsHeaders },
     });
