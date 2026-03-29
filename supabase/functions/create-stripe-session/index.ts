@@ -12,7 +12,7 @@ serve(async (req) => {
 
   try {
     const body = await req.json();
-    const { ref_id, amount, currency, return_url } = body;
+    const { ref_id, amount, currency } = body;
 
     const stripeSecretKey = Deno.env.get("STRIPE_SECRET_KEY");
     const stripePublishableKey = Deno.env.get("STRIPE_PUBLISHABLE_KEY");
@@ -20,20 +20,16 @@ serve(async (req) => {
       throw new Error("Missing Stripe secret key");
     }
 
-    console.log("Creating Stripe embedded checkout session for:", ref_id, "amount:", amount, "currency:", currency);
+    console.log("Creating Stripe PaymentIntent for:", ref_id, "amount:", amount, "currency:", currency);
 
     const params = new URLSearchParams();
+    params.append("amount", String(Math.round(amount)));
+    params.append("currency", currency.toLowerCase());
     params.append("payment_method_types[0]", "card");
-    params.append("mode", "payment");
-    params.append("ui_mode", "embedded_page");
-    params.append("line_items[0][price_data][currency]", currency.toLowerCase());
-    params.append("line_items[0][price_data][unit_amount]", String(Math.round(amount)));
-    params.append("line_items[0][price_data][product_data][name]", `Parking Booking - ${ref_id}`);
-    params.append("line_items[0][quantity]", "1");
-    params.append("return_url", return_url);
-    params.append("client_reference_id", ref_id);
+    params.append("metadata[ref_id]", ref_id);
+    params.append("description", `Parking Booking - ${ref_id}`);
 
-    const response = await fetch("https://api.stripe.com/v1/checkout/sessions", {
+    const response = await fetch("https://api.stripe.com/v1/payment_intents", {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${stripeSecretKey}`,
@@ -49,17 +45,18 @@ serve(async (req) => {
       throw new Error(data.error?.message || `Stripe API error: ${response.status}`);
     }
 
-    console.log("Stripe embedded session created:", data.id);
+    console.log("PaymentIntent created:", data.id);
 
-    return new Response(JSON.stringify({ 
+    return new Response(JSON.stringify({
       client_secret: data.client_secret,
       publishable_key: stripePublishableKey || "",
+      payment_intent_id: data.id,
     }), {
       status: 200,
       headers: { "Content-Type": "application/json", ...corsHeaders },
     });
   } catch (error) {
-    console.error("Error creating Stripe session:", error);
+    console.error("Error creating PaymentIntent:", error);
     return new Response(
       JSON.stringify({ error: error instanceof Error ? error.message : "Failed to create payment session" }),
       { status: 500, headers: { "Content-Type": "application/json", ...corsHeaders } }
