@@ -14,6 +14,7 @@ export interface DomainConfig {
   customer_service?: string;
   logo?: string;
   terms?: string;
+  terms_conditions?: string;
   privacy?: string;
   privacy_policy?: string;
   contact?: string;
