@@ -29,6 +29,7 @@ serve(async (req) => {
     params.append("line_items[0][price_data][currency]", currency.toLowerCase());
     params.append("line_items[0][price_data][unit_amount]", String(Math.round(amount)));
     params.append("line_items[0][price_data][product_data][name]", `Parking Booking - ${ref_id}`);
+    params.append("line_items[0][quantity]", "1");
     params.append("return_url", return_url);
     params.append("client_reference_id", ref_id);
 
