@@ -14,6 +14,7 @@ export interface DomainConfig {
   customer_service?: string;
   logo?: string;
   terms?: string;
+  terms_conditions?: string;
   privacy?: string;
   privacy_policy?: string;
   contact?: string;
@@ -75,6 +76,7 @@ export const DomainConfigProvider = ({ children }: DomainConfigProviderProps) =>
               customer_service: item.customer_service,
               logo: item.logo,
               terms: item.terms,
+              terms_conditions: item.terms_conditions,
               privacy: item.privacy,
               privacy_policy: item.privacy_policy,
               contact: item.contact,
