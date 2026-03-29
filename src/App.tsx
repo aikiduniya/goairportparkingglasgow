@@ -62,6 +62,7 @@ const App = () => (
             <Route path="/booking/confirm" element={<BookingConfirm />} />
             <Route path="/booking/success" element={<BookingSuccess />} />
             <Route path="/thankyou" element={<BookingSuccess />} />
+            <Route path="/payment-return" element={<PaymentReturn />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/services" element={<ServicesPage />} />
