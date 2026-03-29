@@ -1,7 +1,7 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { format, parse } from "date-fns";
-import { CreditCard, Shield, Lock, AlertCircle, Loader2 } from "lucide-react";
+import { Shield, AlertCircle, Loader2 } from "lucide-react";
 import visaLogo from "@/assets/partners/visa.svg";
 import mastercardLogo from "@/assets/partners/mastercard.png";
 import Header from "@/components/Header";
@@ -18,8 +18,7 @@ const BOOKING_FEE = 1.95;
 const BookingConfirm = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const { config } = useDomainConfig();
-  const paymentContainerRef = useRef<HTMLDivElement>(null);
+  const { config, loading: configLoading } = useDomainConfig();
 
   // Read all params from query string (exact names from old PHP flow)
   const new_reference = searchParams.get("new_reference") || "";
@@ -47,24 +46,19 @@ const BookingConfirm = () => {
   const traffic_source = searchParams.get("traffic_source") || "";
 
   const [loading, setLoading] = useState(false);
-  const [paymentLoading, setPaymentLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [worldpayUrl, setWorldpayUrl] = useState<string | null>(null);
 
   // Check if payment gateway should be shown
-  // Only decide after config has loaded; default to payment gateway (false) while loading
   const isPayOnArrival = config ? (!config.secret_key?.trim() && !config.publisher_key?.trim()) : false;
-  const { loading: configLoading } = useDomainConfig();
 
   // Calculate prices
   const totalPrice = price + BOOKING_FEE;
-  const amount = Math.round(totalPrice * 100); // Worldpay expects amount in cents
+  const amount = Math.round(totalPrice * 100); // Stripe expects amount in cents
   const currency = config?.cur === "£" ? "GBP" : "EUR";
 
   const formatDateDisplay = (dateStr: string, time: string) => {
     if (!dateStr) return "";
     try {
-      // Try parsing DD/MM/YYYY format
       const date = parse(dateStr, "dd/MM/yyyy", new Date());
       if (!isNaN(date.getTime())) {
         const formattedTime = time.length === 4 ? `${time.slice(0, 2)}:${time.slice(2)}` : time;
@@ -76,108 +70,38 @@ const BookingConfirm = () => {
     }
   };
 
-  // Initialize Worldpay payment session
-  useEffect(() => {
-    const initPayment = async () => {
-      if (!new_reference || isPayOnArrival) {
-        setPaymentLoading(false);
-        return;
-      }
+  // Build the success URL for Stripe redirect back
+  const buildSuccessReturnUrl = () => {
+    const returnParams = new URLSearchParams({
+      booking_last_inserted_id,
+      email: Email,
+      domain: config?.domain || "goairportparking.ie",
+      webtype: config?.webtype || "Airport",
+      ref_id: new_reference,
+      price: totalPrice.toFixed(2),
+      arrival_date: selectedDate,
+      departure_date: changedDate,
+      arrival_time: arrivalTime,
+      departure_time: departureTime,
+      p_name,
+      airport,
+      cancel: price.toFixed(2),
+      name: `${First_Name} ${Surname}`,
+      car_reg: `${Car_Registration} ${Car_Manufacturer} ${Car_Model} ${Car_Colour}`.trim(),
+    });
+    return `${window.location.origin}/payment-return?${returnParams.toString()}`;
+  };
 
-      try {
-        const response = await fetch(
-          `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/create-worldpay-session`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "apikey": import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
-            },
-            body: JSON.stringify({
-              ref_id: new_reference,
-              amount,
-              currency,
-            }),
-          }
-        );
-
-        const result = await response.json();
-
-        if (result.error) {
-          throw new Error(result.error);
-        }
-
-        setWorldpayUrl(result.url);
-      } catch (err) {
-        console.error("Error creating payment session:", err);
-        setError(err instanceof Error ? err.message : "Failed to initialize payment");
-      } finally {
-        setPaymentLoading(false);
-      }
-    };
-
-    initPayment();
-  }, [new_reference, amount, currency, isPayOnArrival]);
-
-  // Load Worldpay embedded library and initialize iframe
-  useEffect(() => {
-    if (!worldpayUrl || !paymentContainerRef.current) return;
-
-    let libraryObject: any = null;
-
-    const script = document.createElement("script");
-    script.src = "https://payments.worldpay.com/resources/hpp/integrations/embedded/js/hpp-embedded-integration-library.js";
-    script.async = true;
-    script.onload = () => {
-      if ((window as any).WPCL) {
-        const customOptions = {
-          url: worldpayUrl,
-          type: "iframe",
-          inject: "immediate",
-          target: "custom-html",
-          accessibility: true,
-          debug: false,
-          language: "en",
-          resultCallback: async (callbackData: any) => {
-            if (callbackData?.order?.status === "success") {
-              await handlePaymentSuccess(callbackData);
-            } else {
-              setError("Payment was not completed");
-            }
-          },
-        };
-
-        // Create a new instance of the library and call setup
-        libraryObject = new (window as any).WPCL.Library();
-        libraryObject.setup(customOptions);
-      }
-    };
-    document.body.appendChild(script);
-
-    return () => {
-      // Clean up the library instance only if the target element still exists
-      try {
-        if (libraryObject && typeof libraryObject.destroy === "function" && document.getElementById("custom-html")) {
-          libraryObject.destroy();
-        }
-      } catch (e) {
-        // Ignore cleanup errors when navigating away
-        console.log("Worldpay cleanup skipped");
-      }
-      if (script.parentNode) {
-        script.parentNode.removeChild(script);
-      }
-    };
-  }, [worldpayUrl]);
-
-  const handlePaymentSuccess = async (callbackData?: any) => {
+  const handlePayWithStripe = async () => {
     setLoading(true);
     setError(null);
 
     try {
-      // Call process-payment edge function
+      const successUrl = buildSuccessReturnUrl();
+      const cancelUrl = window.location.href; // Return to this page on cancel
+
       const response = await fetch(
-        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/process-payment`,
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/create-stripe-session`,
         {
           method: "POST",
           headers: {
@@ -185,45 +109,30 @@ const BookingConfirm = () => {
             "apikey": import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
           },
           body: JSON.stringify({
-            booking_last_inserted_id,
-            email: Email,
-            from: `booking@${config?.domain || "goairportparking.ie"}`,
-            webtype: config?.webtype || "Airport",
-            booking_type: "Online",
             ref_id: new_reference,
-            price: totalPrice,
-            payment_id: callbackData?.order?.id || "online",
+            amount,
+            currency,
+            success_url: successUrl,
+            cancel_url: cancelUrl,
           }),
         }
       );
 
       const result = await response.json();
 
-      if (result.paysuccess) {
-        // Redirect immediately to thank you page
-        const successParams = new URLSearchParams({
-          price: totalPrice.toFixed(2),
-          ref_id: new_reference,
-          arrival_date: selectedDate,
-          departure_date: changedDate,
-          arrival_time: arrivalTime,
-          departure_time: departureTime,
-          p_name: encodeURIComponent(p_name),
-          airport,
-          cancel: price.toFixed(2),
-          email: Email,
-          name: `${First_Name} ${Surname}`,
-          car_reg: `${Car_Registration} ${Car_Manufacturer} ${Car_Model} ${Car_Colour}`.trim(),
-        });
+      if (result.error) {
+        throw new Error(result.error);
+      }
 
-        navigate(`/thankyou?${successParams.toString()}`, { replace: true });
+      // Redirect to Stripe Checkout
+      if (result.url) {
+        window.location.href = result.url;
       } else {
-        setError(result.error || "Payment processing failed");
+        throw new Error("No checkout URL received");
       }
     } catch (err) {
-      console.error("Payment processing error:", err);
-      setError(err instanceof Error ? err.message : "Payment processing failed");
-    } finally {
+      console.error("Error creating Stripe session:", err);
+      setError(err instanceof Error ? err.message : "Failed to initialize payment");
       setLoading(false);
     }
   };
@@ -256,7 +165,6 @@ const BookingConfirm = () => {
       const result = await response.json();
 
       if (result.paysuccess) {
-        // Redirect immediately to thank you page
         const successParams = new URLSearchParams({
           price: totalPrice.toFixed(2),
           ref_id: new_reference,
@@ -294,7 +202,6 @@ const BookingConfirm = () => {
           <BookingStepper currentStep={4} />
         </div>
       </section>
-
 
       {/* Main Content */}
       <section className="py-6 md:py-8 bg-cream">
@@ -393,7 +300,7 @@ const BookingConfirm = () => {
                   </>
                 ) : (
                   <>
-                    {/* Payment Method Selection */}
+                    {/* Stripe Payment */}
                     <div>
                       <h3 className="text-sm font-medium text-foreground mb-3">Payment Methods</h3>
                       <div className="grid grid-cols-2 gap-2 max-w-[200px]">
@@ -406,35 +313,27 @@ const BookingConfirm = () => {
                       </div>
                     </div>
 
-                    {/* Worldpay Integration Container */}
-                    <div 
-                      id="custom-html" 
-                      ref={paymentContainerRef}
-                      className="border border-border rounded-lg min-h-[300px] overflow-hidden"
-                    >
-                      {paymentLoading ? (
-                        <div className="flex flex-col items-center justify-center h-[300px] gap-3 text-muted-foreground">
-                          <Loader2 className="w-8 h-8 animate-spin text-primary" />
-                          <span className="font-medium">Loading secure payment form...</span>
-                          <span className="text-xs">Please wait while we connect to Worldpay</span>
-                        </div>
-                      ) : error && !worldpayUrl ? (
-                        <div className="flex flex-col items-center justify-center h-[300px] gap-3">
-                          <AlertCircle className="w-12 h-12 text-destructive" />
-                          <p className="text-sm text-destructive font-medium">Failed to load payment gateway</p>
-                          <Button 
-                            variant="outline" 
-                            size="sm"
-                            onClick={() => window.location.reload()}
-                          >
-                            Try Again
-                          </Button>
-                        </div>
-                      ) : null}
+                    <div className="bg-primary/5 rounded-lg p-4 text-center">
+                      <p className="text-sm text-muted-foreground mb-2">Secure payment via Stripe</p>
+                      <p className="text-lg font-semibold text-foreground">Total: {config?.cur || "€"}{totalPrice.toFixed(2)}</p>
                     </div>
 
-                    {/* Error Message */}
-                    {error && worldpayUrl && (
+                    <Button
+                      className="w-full h-12 text-base font-semibold bg-accent hover:bg-accent/90 text-accent-foreground"
+                      onClick={handlePayWithStripe}
+                      disabled={loading}
+                    >
+                      {loading ? (
+                        <>
+                          <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                          Redirecting to payment...
+                        </>
+                      ) : (
+                        `Pay ${config?.cur || "€"}${totalPrice.toFixed(2)} — Secure Checkout`
+                      )}
+                    </Button>
+
+                    {error && (
                       <div className="flex items-center gap-2 p-3 bg-destructive/10 rounded-lg text-destructive text-sm">
                         <AlertCircle className="w-4 h-4" />
                         <span>{error}</span>
