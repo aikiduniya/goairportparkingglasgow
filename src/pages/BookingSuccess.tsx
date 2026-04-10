@@ -14,8 +14,8 @@ const BookingSuccess = () => {
   const { config } = useDomainConfig();
 
   // Read params with exact names from old status.php
-  const price = searchParams.get("price") || "";
-  const ref_id = searchParams.get("ref_id") || searchParams.get("bookingId") || "";
+  const price = searchParams.get("price") || searchParams.get("amount") || searchParams.get("total") || searchParams.get("cancel") || "";
+  const ref_id = searchParams.get("ref_id") || searchParams.get("bookingId") || searchParams.get("new_reference") || "";
   const arrival_date = searchParams.get("arrival_date") || searchParams.get("entryDate") || "";
   const departure_date = searchParams.get("departure_date") || searchParams.get("exitDate") || "";
   const arrival_time = searchParams.get("arrival_time") || searchParams.get("entryTime") || "";
@@ -47,16 +47,28 @@ const BookingSuccess = () => {
 
   // Push conversion data to dataLayer for Google Ads tracking
   useEffect(() => {
-    if (ref_id && price) {
-      (window as any).dataLayer = (window as any).dataLayer || [];
-      const data = {
-        'transactionId': ref_id,
-        'transactionTotal': parseFloat(price) || 0,
-      };
-      (window as any).dataLayer.push(data);
-      console.log('✅ dataLayer push:', data);
-      console.log('📊 Full dataLayer:', (window as any).dataLayer);
-    }
+    const normalizedPrice = price.replace(/[^\d.,-]/g, "").replace(",", ".");
+    const transactionTotal = parseFloat(normalizedPrice);
+
+    if (!ref_id || Number.isNaN(transactionTotal)) return;
+
+    (window as any).dataLayer = (window as any).dataLayer || [];
+
+    const alreadyTracked = (window as any).dataLayer.some(
+      (entry: any) => entry?.transactionId === ref_id
+    );
+
+    if (alreadyTracked || (window as any).__bookingConversionTracked) return;
+
+    const data = {
+      transactionId: ref_id,
+      transactionTotal,
+    };
+
+    (window as any).dataLayer.push(data);
+    (window as any).__bookingConversionTracked = true;
+    console.log("✅ dataLayer push:", data);
+    console.log("📊 Full dataLayer:", (window as any).dataLayer);
   }, [ref_id, price]);
 
   const websiteUrl = config?.domain || "www.goairportparkingglasgow.com";
