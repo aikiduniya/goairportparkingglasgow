@@ -48,46 +48,6 @@
       as="image"
       type="image/webp"
     />
-    <script>
-      (function () {
-        var isThankYouPage =
-          window.location.pathname === '/thankyou' ||
-          window.location.pathname === '/booking/success';
-
-        if (!isThankYouPage) return;
-
-        var params = new URLSearchParams(window.location.search);
-        var transactionId =
-          params.get('ref_id') ||
-          params.get('bookingId') ||
-          params.get('new_reference') ||
-          '';
-        var totalParam =
-          params.get('price') ||
-          params.get('amount') ||
-          params.get('total') ||
-          params.get('cancel') ||
-          '';
-        var normalizedTotal = totalParam.replace(/[^\d.,-]/g, '').replace(',', '.');
-        var transactionTotal = Number.parseFloat(normalizedTotal);
-
-        if (!transactionId || Number.isNaN(transactionTotal)) return;
-
-        window.dataLayer = window.dataLayer || [];
-
-        var alreadyTracked = window.dataLayer.some(function (entry) {
-          return entry && entry.transactionId === transactionId;
-        });
-
-        if (alreadyTracked) return;
-
-        window.dataLayer.push({
-          event: 'purchase',
-          transactionId: transactionId,
-          transactionTotal: transactionTotal
-        });
-      })();
-    </script>
     <!-- Google Tag Manager - deferred to improve FCP -->
     <script>
       window.addEventListener('load', function() {

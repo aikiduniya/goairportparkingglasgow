@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { format, parse } from "date-fns";
 import { CheckCircle, Printer, Home } from "lucide-react";
@@ -14,8 +13,8 @@ const BookingSuccess = () => {
   const { config } = useDomainConfig();
 
   // Read params with exact names from old status.php
-  const price = searchParams.get("price") || searchParams.get("amount") || searchParams.get("total") || searchParams.get("cancel") || "";
-  const ref_id = searchParams.get("ref_id") || searchParams.get("bookingId") || searchParams.get("new_reference") || "";
+  const price = searchParams.get("price") || "";
+  const ref_id = searchParams.get("ref_id") || searchParams.get("bookingId") || "";
   const arrival_date = searchParams.get("arrival_date") || searchParams.get("entryDate") || "";
   const departure_date = searchParams.get("departure_date") || searchParams.get("exitDate") || "";
   const arrival_time = searchParams.get("arrival_time") || searchParams.get("entryTime") || "";
@@ -44,27 +43,6 @@ const BookingSuccess = () => {
       return dateStr;
     }
   };
-
-  // Push conversion data to dataLayer for Google Ads tracking
-  useEffect(() => {
-    const normalizedPrice = price.replace(/[^\d.,-]/g, "").replace(",", ".");
-    const transactionTotal = parseFloat(normalizedPrice);
-
-    if (!ref_id || Number.isNaN(transactionTotal)) return;
-
-    // Use window flag for dedup since GTM replaces dataLayer array
-    const trackingKey = `__tracked_${ref_id}`;
-    if ((window as any)[trackingKey]) return;
-    (window as any)[trackingKey] = true;
-
-    (window as any).dataLayer = (window as any).dataLayer || [];
-    (window as any).dataLayer.push({
-      event: 'purchase',
-      transactionId: ref_id,
-      transactionTotal,
-    });
-    console.log("✅ dataLayer push:", { transactionId: ref_id, transactionTotal });
-  }, [ref_id, price]);
 
   const websiteUrl = config?.domain || "www.goairportparkingglasgow.com";
   const companyName = config?.title || "Go Airport Parking";
