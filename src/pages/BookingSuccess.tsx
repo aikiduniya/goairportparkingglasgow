@@ -52,22 +52,18 @@ const BookingSuccess = () => {
 
     if (!ref_id || Number.isNaN(transactionTotal)) return;
 
+    // Use window flag for dedup since GTM replaces dataLayer array
+    const trackingKey = `__tracked_${ref_id}`;
+    if ((window as any)[trackingKey]) return;
+    (window as any)[trackingKey] = true;
+
     (window as any).dataLayer = (window as any).dataLayer || [];
-
-    const alreadyTracked = (window as any).dataLayer.some(
-      (entry: any) => entry?.transactionId === ref_id
-    );
-
-    if (alreadyTracked) return;
-
-    const data = {
+    (window as any).dataLayer.push({
+      event: 'purchase',
       transactionId: ref_id,
       transactionTotal,
-    };
-
-    (window as any).dataLayer.push(data);
-    console.log("✅ dataLayer push:", data);
-    console.log("📊 Full dataLayer:", (window as any).dataLayer);
+    });
+    console.log("✅ dataLayer push:", { transactionId: ref_id, transactionTotal });
   }, [ref_id, price]);
 
   const websiteUrl = config?.domain || "www.goairportparkingglasgow.com";
