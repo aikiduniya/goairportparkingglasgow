@@ -82,6 +82,7 @@
         if (alreadyTracked) return;
 
         window.dataLayer.push({
+          event: 'purchase',
           transactionId: transactionId,
           transactionTotal: transactionTotal
         });
