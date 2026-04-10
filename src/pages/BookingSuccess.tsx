@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { format, parse } from "date-fns";
 import { CheckCircle, Printer, Home } from "lucide-react";
@@ -47,6 +48,20 @@ const BookingSuccess = () => {
   const websiteUrl = config?.domain || "www.goairportparkingglasgow.com";
   const companyName = config?.title || "Go Airport Parking";
   const airportName = config?.airport_name || "Glasgow Airport";
+
+  // Push transaction data to dataLayer for Google Ads conversion tracking
+  useEffect(() => {
+    if (!ref_id) return;
+    const flag = `__tracked_${ref_id}`;
+    if ((window as any)[flag]) return;
+    (window as any)[flag] = true;
+
+    (window as any).dataLayer = (window as any).dataLayer || [];
+    (window as any).dataLayer.push({
+      transactionId: ref_id,
+      transactionTotal: parseFloat(price) || 0,
+    });
+  }, [ref_id, price]);
 
   return (
     <div className="min-h-screen bg-background">
