@@ -49,10 +49,13 @@ const BookingSuccess = () => {
   useEffect(() => {
     if (ref_id && price) {
       (window as any).dataLayer = (window as any).dataLayer || [];
-      (window as any).dataLayer.push({
+      const data = {
         'transactionId': ref_id,
         'transactionTotal': parseFloat(price) || 0,
-      });
+      };
+      (window as any).dataLayer.push(data);
+      console.log('✅ dataLayer push:', data);
+      console.log('📊 Full dataLayer:', (window as any).dataLayer);
     }
   }, [ref_id, price]);
 
