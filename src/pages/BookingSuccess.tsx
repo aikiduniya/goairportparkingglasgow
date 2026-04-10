@@ -45,6 +45,17 @@ const BookingSuccess = () => {
     }
   };
 
+  // Push conversion data to dataLayer for Google Ads tracking
+  useEffect(() => {
+    if (ref_id && price) {
+      (window as any).dataLayer = (window as any).dataLayer || [];
+      (window as any).dataLayer.push({
+        'transactionId': ref_id,
+        'transactionTotal': parseFloat(price) || 0,
+      });
+    }
+  }, [ref_id, price]);
+
   const websiteUrl = config?.domain || "www.goairportparkingglasgow.com";
   const companyName = config?.title || "Go Airport Parking";
   const airportName = config?.airport_name || "Glasgow Airport";
