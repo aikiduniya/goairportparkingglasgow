@@ -79,16 +79,12 @@
           return entry && entry.transactionId === transactionId;
         });
 
-        if (alreadyTracked) {
-          window.__bookingConversionTracked = true;
-          return;
-        }
+        if (alreadyTracked) return;
 
         window.dataLayer.push({
           transactionId: transactionId,
           transactionTotal: transactionTotal
         });
-        window.__bookingConversionTracked = true;
       })();
     </script>
     <!-- Google Tag Manager - deferred to improve FCP -->

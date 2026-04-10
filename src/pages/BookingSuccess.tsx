@@ -58,7 +58,7 @@ const BookingSuccess = () => {
       (entry: any) => entry?.transactionId === ref_id
     );
 
-    if (alreadyTracked || (window as any).__bookingConversionTracked) return;
+    if (alreadyTracked) return;
 
     const data = {
       transactionId: ref_id,
@@ -66,7 +66,6 @@ const BookingSuccess = () => {
     };
 
     (window as any).dataLayer.push(data);
-    (window as any).__bookingConversionTracked = true;
     console.log("✅ dataLayer push:", data);
     console.log("📊 Full dataLayer:", (window as any).dataLayer);
   }, [ref_id, price]);
