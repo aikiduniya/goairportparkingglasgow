@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { format, parse } from "date-fns";
 import { CheckCircle, Printer, Home } from "lucide-react";
@@ -43,6 +44,17 @@ const BookingSuccess = () => {
       return dateStr;
     }
   };
+
+  // Push conversion data to dataLayer for Google Ads tracking
+  useEffect(() => {
+    if (ref_id && price) {
+      (window as any).dataLayer = (window as any).dataLayer || [];
+      (window as any).dataLayer.push({
+        'transactionId': ref_id,
+        'transactionTotal': parseFloat(price) || 0,
+      });
+    }
+  }, [ref_id, price]);
 
   const websiteUrl = config?.domain || "www.goairportparkingglasgow.com";
   const companyName = config?.title || "Go Airport Parking";
