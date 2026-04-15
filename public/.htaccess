@@ -7,11 +7,23 @@
   RewriteRule ^robots\.txt$ - [L]
   RewriteRule ^google6f148081d631e709\.html$ - [L]
 
+  # ── Bot prerender: serve static HTML snapshots to search-engine crawlers ──
+  # Detects Googlebot, Bingbot, Baiduspider, DuckDuckBot, Yandex, Facebook,
+  # Twitter, LinkedIn, WhatsApp, Telegram link previews
+  RewriteCond %{HTTP_USER_AGENT} (Googlebot|Bingbot|Slurp|DuckDuckBot|Baiduspider|YandexBot|facebookexternalhit|Facebot|Twitterbot|LinkedInBot|WhatsApp|TelegramBot) [NC]
+  RewriteCond %{REQUEST_URI} ^/$ 
+  RewriteRule ^$ __prerender/index.html [L]
+
+  RewriteCond %{HTTP_USER_AGENT} (Googlebot|Bingbot|Slurp|DuckDuckBot|Baiduspider|YandexBot|facebookexternalhit|Facebot|Twitterbot|LinkedInBot|WhatsApp|TelegramBot) [NC]
+  RewriteCond %{REQUEST_URI} ^/(about|services|faqs|blogs|contact|testimonials|international|terms|privacy)/?$
+  RewriteRule ^([a-z-]+)/?$ __prerender/%1.html [L]
+  # ── End bot prerender ──
+
   # If the requested resource exists as a file or directory, serve it
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
 
-  # Otherwise, redirect all requests to index.html
+  # Otherwise, redirect all requests to index.html (SPA fallback)
   RewriteRule ^ index.html [L]
 </IfModule>
 
