@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { useDomainConfig } from "@/contexts/DomainConfigContext";
+import { getAttribution } from "@/lib/attribution";
 import bookingLogo from "@/assets/booking-logo.webp";
 
 const BookingSuccess = () => {
@@ -49,18 +50,44 @@ const BookingSuccess = () => {
   const companyName = config?.title || "Go Airport Parking";
   const airportName = config?.airport_name || "Glasgow Airport";
 
-  // Push transaction data to dataLayer for Google Ads conversion tracking
+  // Push transaction + attribution data to dataLayer (with dedupe per booking ref)
   useEffect(() => {
     if (!ref_id) return;
-    const flag = `__tracked_${ref_id}`;
-    if ((window as any)[flag]) return;
-    (window as any)[flag] = true;
+
+    const FIRED_KEY = "lvbl_attr_fired_refs";
+    let fired: string[] = [];
+    try {
+      fired = JSON.parse(sessionStorage.getItem(FIRED_KEY) || "[]");
+    } catch {}
+    if (fired.includes(ref_id)) return;
+
+    const value = parseFloat(price) || 0;
+    const attr = getAttribution();
 
     (window as any).dataLayer = (window as any).dataLayer || [];
+
+    // Existing Google Ads conversion data
     (window as any).dataLayer.push({
       transactionId: ref_id,
-      transactionTotal: parseFloat(price) || 0,
+      transactionTotal: value,
     });
+
+    // New attribution event for GTM/GA4
+    (window as any).dataLayer.push({
+      event: "booking_attribution",
+      booking_reference: ref_id,
+      transaction_id: ref_id,
+      booking_value: value,
+      traffic_source: attr?.traffic_source || "direct",
+      traffic_medium: attr?.traffic_medium || "(none)",
+      traffic_channel: attr?.traffic_channel || "direct",
+      traffic_referrer: attr?.traffic_referrer || "",
+    });
+
+    fired.push(ref_id);
+    try {
+      sessionStorage.setItem(FIRED_KEY, JSON.stringify(fired));
+    } catch {}
   }, [ref_id, price]);
 
   return (
