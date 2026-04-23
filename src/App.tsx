@@ -1,5 +1,6 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { initAttribution } from "@/lib/attribution";
 
 // Lazy load toasters - not needed on initial page load
 const Toaster = lazy(() => import("@/components/ui/toaster").then(m => ({ default: m.Toaster })));
@@ -38,6 +39,13 @@ const CanonicalHandler = () => {
   return null;
 };
 
+const AttributionHandler = () => {
+  useEffect(() => {
+    initAttribution();
+  }, []);
+  return null;
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <DomainConfigProvider>
@@ -47,6 +55,7 @@ const App = () => (
       </Suspense>
       <BrowserRouter>
         <CanonicalHandler />
+        <AttributionHandler />
         <Suspense fallback={<RouteLoading label="Loading page…" />}>
           <Routes>
             <Route path="/" element={<Index />} />
