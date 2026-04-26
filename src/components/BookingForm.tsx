@@ -22,7 +22,9 @@ const BookingForm = () => {
   defaultExitDate.setDate(today.getDate() + 7);
 
   // Get traffic_source from URL if present
-  const trafficSource = searchParams.get("source") || "";
+  // Get traffic_source: prefer explicit ?source= param, otherwise auto-detect
+  // ("seo" | "Backlink" | "" for paid/direct). Cached in sessionStorage to avoid duplicates.
+  const trafficSource = searchParams.get("source") || detectTrafficSource();
 
   const [entryDate, setEntryDate] = useState<Date>(today);
   const [exitDate, setExitDate] = useState<Date>(defaultExitDate);
