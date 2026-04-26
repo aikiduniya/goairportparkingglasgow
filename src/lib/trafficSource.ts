@@ -83,7 +83,7 @@ export function detectTrafficSource(): string {
         // Same-site navigation -> ignore (do not overwrite)
         if (refHost && refHost !== currentHost) {
           if (isSearchEngine(refHost)) {
-            result = "seo";
+            result = "SEO";
           } else {
             result = "Backlink";
           }
