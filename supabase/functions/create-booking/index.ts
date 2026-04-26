@@ -67,18 +67,7 @@ serve(async (req) => {
     apiUrl.searchParams.set("access_token", accessToken);
     apiUrl.searchParams.set("cur", body.cur || "€");
     apiUrl.searchParams.set("webtype", body.webtype || "Airport");
-
-    // --- Booking attribution mapping ---
-    // organic_search => "SEO"; referral => "Backlink"; paid/direct/unknown => ""
-    const channel = body?.attribution?.traffic_channel || "";
-    let trafficSourceForDb = "";
-    if (channel === "organic_search") trafficSourceForDb = "SEO";
-    else if (channel === "referral") trafficSourceForDb = "Backlink";
-    // explicit override from frontend takes precedence only if attribution missing
-    if (!channel && body.traffic_source) trafficSourceForDb = body.traffic_source;
-
-    apiUrl.searchParams.set("traffic_source", trafficSourceForDb);
-    console.log("[create-booking] attribution channel:", channel, "=> DB value:", trafficSourceForDb);
+    apiUrl.searchParams.set("traffic_source", body.traffic_source || "");
 
     console.log("Creating booking at:", apiUrl.toString().replace(accessToken, "***"));
 
