@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import logo from "@/assets/booking-logo.webp";
 import { useDomainConfig } from "@/contexts/DomainConfigContext";
+import { detectTrafficSource } from "@/lib/trafficSource";
 
 const BookingForm = () => {
   const navigate = useNavigate();
