@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import Header from "@/components/Header";
+import useSEO from "@/hooks/useSEO";
 import HeroSection from "@/components/HeroSection";
 
 // Lazy load all below-fold sections to reduce TBT
@@ -24,6 +25,12 @@ const SectionFallback = ({ className = "" }: { className?: string }) => (
 
 const Index = () => {
   const location = useLocation();
+  useSEO({
+    title: "Glasgow Airport Parking – Meet & Greet & Park & Ride Deals",
+    description:
+      "Book secure Glasgow Airport parking with Meet & Greet and Park & Ride services. Affordable prices, easy booking and reliable transfers.",
+    canonicalPath: "/",
+  });
 
   // Handle scroll to section when navigating from another page
   useEffect(() => {
