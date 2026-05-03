@@ -6,6 +6,7 @@ import { Calendar, ArrowRight, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { blogPosts } from "@/data/blogs";
 import blogGlasgowParking from "@/assets/blog-glasgow-parking.webp";
+import useSEO from "@/hooks/useSEO";
 
 const localImages: Record<string, string> = {
   "blog-glasgow-parking": blogGlasgowParking,
@@ -17,14 +18,12 @@ const getImage = (blog: (typeof blogPosts)[0]) => {
 };
 
 const Blogs = () => {
+  useSEO({
+    title: "Glasgow Airport Parking Blog | Tips, Guides & Travel Advice",
+    description:
+      "Read helpful Glasgow Airport parking guides, travel tips and planning advice designed to make your airport experience easier and stress-free.",
+  });
   useEffect(() => {
-    document.title = "Glasgow Airport Parking Blog | Tips, Guides & Travel Advice";
-    document
-      .querySelector('meta[name="description"]')
-      ?.setAttribute(
-        "content",
-        "Read helpful Glasgow Airport parking guides, travel tips, and planning advice designed to make your airport experience easier and stress-free.",
-      );
     document
       .querySelector('meta[name="keywords"]')
       ?.setAttribute(

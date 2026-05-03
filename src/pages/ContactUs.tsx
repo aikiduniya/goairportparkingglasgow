@@ -9,8 +9,14 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useToast } from "@/hooks/use-toast";
 import { useDomainConfig } from "@/contexts/DomainConfigContext";
 import { supabase } from "@/integrations/supabase/client";
+import useSEO from "@/hooks/useSEO";
 
 const ContactUs = () => {
+  useSEO({
+    title: "Contact Us | Go Glasgow Airport Parking",
+    description:
+      "Get in touch with Go Glasgow Airport Parking for booking help, customer support or general enquiries. We're here 24/7 to assist you.",
+  });
   const { toast } = useToast();
   const { config } = useDomainConfig();
 

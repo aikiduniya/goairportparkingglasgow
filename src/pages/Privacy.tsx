@@ -1,8 +1,14 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useDomainConfig } from "@/contexts/DomainConfigContext";
+import useSEO from "@/hooks/useSEO";
 
 const Privacy = () => {
+  useSEO({
+    title: "Privacy Policy | Go Glasgow Airport Parking",
+    description:
+      "Read our privacy policy to learn how Go Glasgow Airport Parking collects, uses and protects your personal information.",
+  });
   const { config, loading } = useDomainConfig();
   const companyName = config?.legal_name || config?.title || "Go Airport Parking";
 
