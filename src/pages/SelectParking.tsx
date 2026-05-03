@@ -8,6 +8,7 @@ import ParkingFilters from "@/components/booking/ParkingFilters";
 import ProductInfoModal from "@/components/booking/ProductInfoModal";
 import { useDomainConfig } from "@/contexts/DomainConfigContext";
 import { AlertCircle, Loader2 } from "lucide-react";
+import useSEO from "@/hooks/useSEO";
 
 // Styles for legacy HTML returned by the products API
 import "@/styles/legacy-products.css";

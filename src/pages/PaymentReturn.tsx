@@ -4,8 +4,10 @@ import { Loader2, AlertCircle } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
+import useSEO from "@/hooks/useSEO";
 
 const PaymentReturn = () => {
+  useSEO({ title: "Processing Payment", noindex: true });
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const [error, setError] = useState<string | null>(null);
