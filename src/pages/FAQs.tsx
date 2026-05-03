@@ -6,8 +6,14 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { useDomainConfig } from "@/contexts/DomainConfigContext";
+import useSEO from "@/hooks/useSEO";
 
 const FAQs = () => {
+  useSEO({
+    title: "FAQs | Glasgow Airport Parking Help & Booking Questions",
+    description:
+      "Find answers to common questions about booking, payments, Meet & Greet and Park & Ride services at Glasgow Airport.",
+  });
   const { config } = useDomainConfig();
   const phoneNumber = config?.customer_service || "+44 203 9292 689";
   const airportName = config?.airport_name || "the airport";
