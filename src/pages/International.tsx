@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Car, Bus, Sparkles, MapPin } from "lucide-react";
+import useSEO from "@/hooks/useSEO";
 
 const AirportCard = ({ airport, index }: { airport: { name: string; image: string }; index: number }) => (
   <div
@@ -27,6 +28,11 @@ const AirportCard = ({ airport, index }: { airport: { name: string; image: strin
 );
 
 const International = () => {
+  useSEO({
+    title: "International Airport Parking | Go Airport Parking",
+    description:
+      "Compare and book airport parking across the UK and international airports. Trusted Meet & Greet and Park & Ride services worldwide.",
+  });
   const ukAirports = [
     {
       name: "Birmingham",

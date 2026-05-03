@@ -1,3 +1,4 @@
+# Force HTTPS + non-www in a single 301 redirect (avoids redirect chains)
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
@@ -7,15 +8,20 @@
   RewriteRule ^robots\.txt$ - [L]
   RewriteRule ^google6f148081d631e709\.html$ - [L]
 
+  # Redirect www -> non-www AND http -> https in ONE 301 (no chain)
+  RewriteCond %{HTTP_HOST} ^www\.goairportparkingglasgow\.com$ [NC,OR]
+  RewriteCond %{HTTPS} off
+  RewriteRule ^(.*)$ https://goairportparkingglasgow.com/$1 [R=301,L]
+
   # If the requested resource exists as a file or directory, serve it
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
 
-  # Otherwise, redirect all requests to index.html
+  # SPA fallback
   RewriteRule ^ index.html [L]
 </IfModule>
 
-# Serve sitemap.xml with correct content type
+# Correct content types for SEO files
 <IfModule mod_headers.c>
   <FilesMatch "sitemap\.xml$">
     Header set Content-Type "application/xml; charset=utf-8"

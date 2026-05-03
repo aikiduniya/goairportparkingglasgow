@@ -6,8 +6,14 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import googleIcon from "@/assets/partners/google-icon.png";
 import trustpilotStars from "@/assets/partners/trustpilot-stars.svg";
 import facebookIcon from "@/assets/partners/facebook-icon.png";
+import useSEO from "@/hooks/useSEO";
 
 const TestimonialsPage = () => {
+  useSEO({
+    title: "Customer Reviews & Testimonials | Go Glasgow Airport Parking",
+    description:
+      "Read genuine customer reviews and testimonials about our Glasgow Airport parking services from Google, Trustpilot and Facebook.",
+  });
   const googleReviews = [
     {
       name: "Emma W",

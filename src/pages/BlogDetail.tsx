@@ -6,6 +6,7 @@ import { Calendar, Eye, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { blogPosts } from "@/data/blogs";
 import blogGlasgowParking from "@/assets/blog-glasgow-parking.webp";
+import useSEO from "@/hooks/useSEO";
 
 const localImages: Record<string, string> = {
   "blog-glasgow-parking": blogGlasgowParking,
@@ -20,10 +21,13 @@ const BlogDetail = () => {
   const { slug } = useParams<{ slug: string }>();
   const blog = blogPosts.find((b) => b.slug === slug);
 
+  useSEO({
+    title: blog?.metaTitle,
+    description: blog?.metaDescription,
+  });
+
   useEffect(() => {
     if (blog) {
-      document.title = blog.metaTitle;
-      document.querySelector('meta[name="description"]')?.setAttribute("content", blog.metaDescription);
       document.querySelector('meta[name="keywords"]')?.setAttribute("content", blog.metaKeywords);
     }
   }, [blog]);

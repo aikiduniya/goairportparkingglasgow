@@ -7,8 +7,10 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { useDomainConfig } from "@/contexts/DomainConfigContext";
 import bookingLogo from "@/assets/booking-logo.webp";
+import useSEO from "@/hooks/useSEO";
 
 const BookingSuccess = () => {
+  useSEO({ title: "Booking Confirmation", noindex: true });
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { config } = useDomainConfig();

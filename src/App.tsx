@@ -7,7 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { DomainConfigProvider } from "./contexts/DomainConfigContext";
 import Index from "./pages/Index";
 import RouteLoading from "@/components/RouteLoading";
-import useCanonical from "@/hooks/useCanonical";
+import useSEO from "@/hooks/useSEO";
 
 // Lazy load Sonner toaster - not needed on initial page load
 const Sonner = lazy(() => import("@/components/ui/sonner").then(m => ({ default: m.Toaster })));
@@ -34,7 +34,9 @@ const NotFound = lazy(() => import("./pages/NotFound"));
 const queryClient = new QueryClient();
 
 const CanonicalHandler = () => {
-  useCanonical();
+  // Default: keeps canonical + robots in sync on every navigation.
+  // Individual pages can override via their own useSEO call with title/description.
+  useSEO();
   return null;
 };
 

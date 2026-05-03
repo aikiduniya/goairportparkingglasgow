@@ -2,8 +2,14 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useDomainConfig } from "@/contexts/DomainConfigContext";
 import { Loader2 } from "lucide-react";
+import useSEO from "@/hooks/useSEO";
 
 const Terms = () => {
+  useSEO({
+    title: "Terms & Conditions | Go Glasgow Airport Parking",
+    description:
+      "Read the terms and conditions for booking and using Go Glasgow Airport Parking services.",
+  });
   const { config, loading } = useDomainConfig();
 
   return (
