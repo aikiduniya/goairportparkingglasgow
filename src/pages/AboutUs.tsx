@@ -5,8 +5,14 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { useDomainConfig } from "@/contexts/DomainConfigContext";
+import useSEO from "@/hooks/useSEO";
 
 const AboutUs = () => {
+  useSEO({
+    title: "About Us | Go Glasgow Airport Parking",
+    description:
+      "Learn about Go Glasgow Airport Parking — our story, values and commitment to safe, affordable and reliable airport parking.",
+  });
   const { config } = useDomainConfig();
   const title = config?.title || "Go Airport Parking";
   const webName = config?.web_name || "Go Airport Parking";

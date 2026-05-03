@@ -3,6 +3,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import meetGreetImage from "@/assets/meet-greet.jpg";
 import parkRideImage from "@/assets/park-ride-service.jpg";
+import useSEO from "@/hooks/useSEO";
 
 const services = [
   {
@@ -20,9 +21,12 @@ const services = [
 ];
 
 const ServicesPage = () => {
+  useSEO({
+    title: "Our Services - Meet & Greet & Park & Ride Airport Parking",
+    description:
+      "Explore our airport parking services including Meet & Greet and Park & Ride. Convenient, secure and affordable parking options for every traveller.",
+  });
   useEffect(() => {
-    document.title = "Our Services - Meet & Greet & Park & Ride Airport Parking";
-    document.querySelector('meta[name="description"]')?.setAttribute("content", "Explore our airport parking services including Meet & Greet and Park & Ride. Convenient, secure, and affordable parking options for every traveller.");
     document.querySelector('meta[name="keywords"]')?.setAttribute("content", "airport parking services, meet and greet parking, park and ride parking, cheap airport parking, secure car park, terminal transfers");
   }, []);
 
