@@ -77,6 +77,7 @@ const parseProductCards = (html: string): ParsedProduct[] => {
 };
 
 const SelectParking = () => {
+  useSEO({ title: "Select Parking", noindex: true });
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { config } = useDomainConfig();

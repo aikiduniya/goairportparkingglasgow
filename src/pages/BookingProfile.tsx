@@ -11,8 +11,10 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useDomainConfig } from "@/contexts/DomainConfigContext";
 import { supabase } from "@/integrations/supabase/client";
+import useSEO from "@/hooks/useSEO";
 
 const BookingProfile = () => {
+  useSEO({ title: "Booking Details", noindex: true });
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { config } = useDomainConfig();

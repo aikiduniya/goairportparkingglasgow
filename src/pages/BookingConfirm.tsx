@@ -11,6 +11,7 @@ import Footer from "@/components/Footer";
 import BookingStepper from "@/components/booking/BookingStepper";
 import { Button } from "@/components/ui/button";
 import { useDomainConfig } from "@/contexts/DomainConfigContext";
+import useSEO from "@/hooks/useSEO";
 
 import("./BookingSuccess").catch(() => {});
 
@@ -103,6 +104,7 @@ const CardForm = ({ clientSecret, totalPrice, currency, onSuccess, onError }: Ca
 
 // --- Main BookingConfirm Component ---
 const BookingConfirm = () => {
+  useSEO({ title: "Confirm Booking", noindex: true });
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { config, loading: configLoading } = useDomainConfig();
