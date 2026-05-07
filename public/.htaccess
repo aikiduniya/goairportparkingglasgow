@@ -3,6 +3,7 @@
   RewriteEngine On
   RewriteBase /
   Options -MultiViews
+  DirectorySlash Off
 
   # Serve static SEO files directly - do NOT rewrite these
   RewriteRule ^sitemap\.xml$ - [L]
