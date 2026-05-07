@@ -13,13 +13,22 @@
   # Redirect www/http/trailing-slash route variants to the final canonical URL in ONE 301
   RewriteCond %{HTTP_HOST} !^goairportparkingglasgow\.com$ [NC,OR]
   RewriteCond %{HTTPS} off [OR]
-  RewriteCond %{REQUEST_URI} ^/(about|services|faqs|blogs|contact|testimonials|international|terms|privacy)/$ [NC]
+  RewriteCond %{REQUEST_URI} ^/(about|services|faqs|blogs|contact|testimonials|international|terms|privacy|blogs/[^/]+)/$ [NC]
   RewriteRule ^(about|services|faqs|blogs|contact|testimonials|international|terms|privacy)/?$ https://goairportparkingglasgow.com/$1 [R=301,L]
+  RewriteCond %{HTTP_HOST} !^goairportparkingglasgow\.com$ [NC,OR]
+  RewriteCond %{HTTPS} off [OR]
+  RewriteCond %{REQUEST_URI} ^/blogs/([^/]+)/$ [NC]
+  RewriteRule ^blogs/([^/]+)/$ https://goairportparkingglasgow.com/blogs/$1 [R=301,L]
 
   # Redirect www -> non-www AND http -> https in ONE 301 for all other URLs
   RewriteCond %{HTTP_HOST} ^www\.goairportparkingglasgow\.com$ [NC,OR]
   RewriteCond %{HTTPS} off
   RewriteRule ^(.*)$ https://goairportparkingglasgow.com/$1 [R=301,L]
+
+  # Redirect file-style URLs to canonical clean URLs
+  RewriteRule ^index\.html$ https://goairportparkingglasgow.com/ [R=301,L]
+  RewriteRule ^(about|services|faqs|blogs|contact|testimonials|international|terms|privacy)\.html$ https://goairportparkingglasgow.com/$1 [R=301,L]
+  RewriteRule ^blog-(.+)\.html$ https://goairportparkingglasgow.com/blogs/$1 [R=301,L]
 
   # Serve public SEO routes as flat files so /about never redirects to /about/
   RewriteRule ^about$ about.html [L]
