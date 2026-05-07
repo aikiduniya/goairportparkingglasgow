@@ -41,6 +41,12 @@
   RewriteRule ^terms$ terms.html [L]
   RewriteRule ^privacy$ privacy.html [L]
   RewriteRule ^blogs/([^/]+)$ blog-$1.html [L]
+  RewriteRule ^select-parking$ select-parking.html [L]
+  RewriteRule ^booking/profile$ booking-profile.html [L]
+  RewriteRule ^booking/confirm$ booking-confirm.html [L]
+  RewriteRule ^booking/success$ booking-success.html [L]
+  RewriteRule ^thankyou$ thankyou.html [L]
+  RewriteRule ^payment-return$ payment-return.html [L]
 
   # If the requested resource exists as a file or directory, serve it
   RewriteCond %{REQUEST_FILENAME} !-f
