@@ -110,6 +110,15 @@ const publicRoutes = [
   },
 ];
 
+const noindexRoutes = [
+  { path: "/select-parking", outputFile: "select-parking.html", title: "Select Parking" },
+  { path: "/booking/profile", outputFile: "booking-profile.html", title: "Booking Details" },
+  { path: "/booking/confirm", outputFile: "booking-confirm.html", title: "Confirm Booking" },
+  { path: "/booking/success", outputFile: "booking-success.html", title: "Booking Confirmation" },
+  { path: "/thankyou", outputFile: "thankyou.html", title: "Booking Confirmation" },
+  { path: "/payment-return", outputFile: "payment-return.html", title: "Processing Payment" },
+];
+
 function htmlEscape(value) {
   return String(value)
     .replaceAll("&", "&amp;")
@@ -152,9 +161,9 @@ function replaceOrInsert(html, pattern, replacement) {
   return html.replace("</head>", `  ${replacement}\n  </head>`);
 }
 
-function injectMeta(html, { url, title, description }) {
+function injectMeta(html, { url, title, description, noindex = false }) {
   const safeTitle = htmlEscape(title);
-  const safeDescription = htmlEscape(description);
+  const safeDescription = htmlEscape(description ?? "Go Glasgow Airport Parking secure booking page.");
   let out = html;
 
   out = out.replace(/<title>[\s\S]*?<\/title>/i, `<title>${safeTitle}</title>`);
@@ -168,7 +177,7 @@ function injectMeta(html, { url, title, description }) {
   out = replaceOrInsert(
     out,
     /<meta\s+name=["']robots["'][^>]*>/i,
-    `<meta name="robots" content="index, follow">`,
+    `<meta name="robots" content="${noindex ? "noindex, follow" : "index, follow"}">`,
   );
 
   out = replaceOrInsert(
@@ -240,6 +249,14 @@ for (const route of routes) {
   fs.writeFileSync(path.join(distDir, route.outputFile), html, "utf8");
 }
 
+for (const route of noindexRoutes) {
+  const url = `${SITE_ORIGIN}${route.path}`;
+  const html = injectMeta(baseHtml, { url, title: route.title, noindex: true });
+  fs.writeFileSync(path.join(distDir, route.outputFile), html, "utf8");
+}
+
 writeSitemap(routes);
 
-console.log(`[generate-static-pages] Generated ${routes.length} flat static HTML files and sitemap.xml.`);
+console.log(
+  `[generate-static-pages] Generated ${routes.length} indexable pages, ${noindexRoutes.length} noindex pages and sitemap.xml.`,
+);
