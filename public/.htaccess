@@ -2,16 +2,35 @@
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
+  Options -MultiViews
 
   # Serve static SEO files directly - do NOT rewrite these
   RewriteRule ^sitemap\.xml$ - [L]
   RewriteRule ^robots\.txt$ - [L]
   RewriteRule ^google6f148081d631e709\.html$ - [L]
 
-  # Redirect www -> non-www AND http -> https in ONE 301 (no chain)
+  # Redirect www/http/trailing-slash route variants to the final canonical URL in ONE 301
+  RewriteCond %{HTTP_HOST} !^goairportparkingglasgow\.com$ [NC,OR]
+  RewriteCond %{HTTPS} off [OR]
+  RewriteCond %{REQUEST_URI} ^/(about|services|faqs|blogs|contact|testimonials|international|terms|privacy)/$ [NC]
+  RewriteRule ^(about|services|faqs|blogs|contact|testimonials|international|terms|privacy)/?$ https://goairportparkingglasgow.com/$1 [R=301,L]
+
+  # Redirect www -> non-www AND http -> https in ONE 301 for all other URLs
   RewriteCond %{HTTP_HOST} ^www\.goairportparkingglasgow\.com$ [NC,OR]
   RewriteCond %{HTTPS} off
   RewriteRule ^(.*)$ https://goairportparkingglasgow.com/$1 [R=301,L]
+
+  # Serve public SEO routes as flat files so /about never redirects to /about/
+  RewriteRule ^about$ about.html [L]
+  RewriteRule ^services$ services.html [L]
+  RewriteRule ^faqs$ faqs.html [L]
+  RewriteRule ^blogs$ blogs.html [L]
+  RewriteRule ^contact$ contact.html [L]
+  RewriteRule ^testimonials$ testimonials.html [L]
+  RewriteRule ^international$ international.html [L]
+  RewriteRule ^terms$ terms.html [L]
+  RewriteRule ^privacy$ privacy.html [L]
+  RewriteRule ^blogs/([^/]+)$ blog-$1.html [L]
 
   # If the requested resource exists as a file or directory, serve it
   RewriteCond %{REQUEST_FILENAME} !-f
